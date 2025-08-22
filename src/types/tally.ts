@@ -1,0 +1,17 @@
+export type TallyType = {
+    // id: UUID,
+    replaced: string,
+    date_replaced: Date,
+    part_brand: string,
+    cost: number,
+    service: string,
+    mechanic: string,
+    guarantee: boolean,
+    guarantee_time: Date,
+    comments: string,
+    current_mileage: number,
+    mileage_before_service: number,
+    warranty_by_mileage: number,
+    document_title: string,
+    documentURL: string,
+}
