@@ -4,6 +4,39 @@
 
   &--container {
     width: 600px;
+    display: flex;
+    align-items: center;
+  }
+
+  &__label {
+    width: 70%;
+    padding-top: 10px;
+  }
+
+  &__input {
+    width: 70%;
+    background-color: #818080;
+    color: #000;
+    font-weight: bold;
+  }
+
+  &__textarea {
+    max-width: 70%;
+    min-width: 70%;
+    max-height: 100px;
+    min-height: 100px;
+    background-color: #818080;
+    color: #000;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  &__button {
+    width: 70%;
+    margin-top: 10px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.55);
   }
 }
+
 
