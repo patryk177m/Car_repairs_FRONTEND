@@ -1,0 +1,28 @@
+:root {
+  box-sizing: border-box;
+  max-width: 100vw;
+  max-height: 100vh;
+}
+
+.global {
+
+  &--container {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+}
+
+body {
+  background-color: rgba(0, 0, 0, 0.72);
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.2rem;
+}
+
+input {
+  font-size: 1.2rem;
+}
+
+button {
+  font-size: 1.2rem;
+}

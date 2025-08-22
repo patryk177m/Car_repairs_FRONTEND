@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import  "../styles/formAddTally.scss";
+import "../styles/global.scss";
 import {createTally} from "../utils/api";
 import {TallyType} from "../types/tally";
 // import { TallyType }  from "../types/tally";
