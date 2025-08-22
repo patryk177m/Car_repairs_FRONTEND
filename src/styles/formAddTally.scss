@@ -14,6 +14,21 @@
 
   &__input {
     width: 70%;
+    background-color: #818080;
+    color: #000;
+    font-weight: bold;
+  }
+
+  &__textarea {
+    max-width: 70%;
+    min-width: 70%;
+    max-height: 100px;
+    min-height: 100px;
+    background-color: #818080;
+    color: #000;
+    font-weight: bold;
+
   }
 }
+
 

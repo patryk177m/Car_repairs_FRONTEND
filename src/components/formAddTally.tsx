@@ -56,9 +56,6 @@ export const FormAddTally: React.FC = () => {
             <label className="form__label" htmlFor="guarantee_time"> Czas do końca gwarancji </label>
             <input className="form__input" onChange={handleChange} value={String(tally?.guarantee_time)} type="date" name="guarantee_time" required/>
 
-            <label className="form__label" htmlFor="comments"> Uwagi </label>
-            <input className="form__input" onChange={handleChange} value={tally?.comments} type="textarea" name="comments" required/>
-
             <label className="form__label" htmlFor="current_mileage"> Aktualny przebieg </label>
             <input className="form__input" onChange={handleChange} value={tally?.current_mileage} type="text" name="current_mileage" required/>
 
@@ -73,6 +70,9 @@ export const FormAddTally: React.FC = () => {
 
             <label className="form__label" htmlFor="documentURL"> Adres URL dokumentu </label>
             <input className="form__input" onChange={handleChange} value={tally?.documentURL} type="text" name="documentURL" required/>
+
+            <label className="form__label" htmlFor="comments"> Uwagi </label>
+            <textarea className="form__textarea" onChange={handleChange} value={tally?.comments} name="comments" required/>
 
             <button className="form__button" type="submit">Zapisz</button>
         </form>
