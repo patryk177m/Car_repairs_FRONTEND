@@ -36,7 +36,7 @@ export const FormAddTally: React.FC = () => {
             <input onChange={handleChange} value={tally?.replaced} type="text" name="replaced" required/>
 
             <label htmlFor="date_replaced"> Data wymiany </label>
-            <input onChange={handleChange} value={String(tally?.date_replaced)} type="date" name="date_replaced" />
+            <input onChange={handleChange} value={String(tally?.date_replaced)} type="date" name="date_replaced" required/>
 
             <label htmlFor="part_brand"> Marka części </label>
             <input onChange={handleChange} value={tally?.part_brand} type="text" name="part_brand" required/>
@@ -51,10 +51,10 @@ export const FormAddTally: React.FC = () => {
             <input onChange={handleChange} value={tally?.mechanic} type="text" name="mechanic" required/>
 
             <label htmlFor="guarantee"> Czy gwarancja </label>
-            <input onChange={handleChange} value={String(tally?.guarantee)} type="text" name="guarantee" />
+            <input onChange={handleChange} value={String(tally?.guarantee)} type="text" name="guarantee" required/>
 
             <label htmlFor="guarantee_time"> Czas do końca gwarancji </label>
-            <input onChange={handleChange} value={String(tally?.guarantee_time)} type="date" name="guarantee_time" />
+            <input onChange={handleChange} value={String(tally?.guarantee_time)} type="date" name="guarantee_time" required/>
 
             <label htmlFor="comments"> Uwagi </label>
             <input onChange={handleChange} value={tally?.comments} type="textarea" name="comments" required/>
