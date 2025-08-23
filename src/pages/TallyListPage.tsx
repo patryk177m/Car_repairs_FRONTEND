@@ -3,6 +3,7 @@ import "../styles/tallyListPage.scss";
 import { TallyType } from "../types/tally";
 import { getTallies } from "../utils/api";
 import { Tally } from "../components/Tally";
+import {convertToDate} from "../utils/date";
 
 export const TallyListPage = () => {
     const [tallies, setTallies] = useState<TallyType[]>([]);
@@ -12,14 +13,19 @@ export const TallyListPage = () => {
             try {
                 const response = await getTallies();
                 setTallies(response);
-                // return response
             } catch (err) {
                 console.log(err);
             }
         };
 
         fetchTallies();
+
+
     }, []);
+
+    const isGuarantee = (tallies: TallyType[]) => {
+      return tallies.map(tally => tally.guarantee_time)
+    }
 
     return (
         <table className="global--container table">

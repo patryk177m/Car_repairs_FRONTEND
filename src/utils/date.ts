@@ -9,11 +9,26 @@ export const fullDate = (time: Date) => {
     if (numberMonth < 10) return `${day}.0${numberMonth}.${year}`;
 
 
-    return `${day}.${numberMonth}.${year}`;
+    return `${year}.${numberMonth}.${day}`;
 };
 
-export const convertToDate = (date: Date) => {
-    if (!date) return null;
+export const convertToDate = (date: string | Date): boolean => {
     const convertDate = new Date(date);
-    return convertDate > new Date() ? "tak" : "nie";
-}
+    return convertDate >= new Date();
+};
+
+export const calcGuarantee = (
+    miles: number,
+    actualMiles: number,
+    milesByGuarantee: number
+): boolean => {
+    return (miles + milesByGuarantee) >= actualMiles;
+};
+
+export const checkGuarantee = (
+    dateValid: boolean,
+    mileageValid: boolean
+): string => {
+    if (dateValid && mileageValid) return "tak";
+    return "nie";
+};
