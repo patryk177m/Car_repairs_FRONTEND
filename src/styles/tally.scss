@@ -21,3 +21,14 @@ td {
   border-bottom: 2.3px dotted #000;
 }
 
+.colortext {
+  font-weight: bold;
+  &--red {
+    color: red;
+  }
+
+  &--green {
+    color: green;
+  }
+}
+
