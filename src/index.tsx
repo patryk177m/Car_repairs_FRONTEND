@@ -3,13 +3,30 @@ import ReactDOM from 'react-dom/client';
 import './styles/index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {BrowserRouter, Route, Routes} from "react-router";
+import {Home} from "./pages/Home";
+import { FormAddTally } from "./pages/FormAddTally";
+import {TallyListPage} from "./pages/TallyListPage";
+import {NotFound} from "./pages/NotFound";
+import {Header} from "./components/Header";
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+      <BrowserRouter>
+          <Header/>
+          <Routes>
+              <Route path="/" element={<App />} />
+              <Route index element={<Home />} />
+              <Route path="/add" element={<FormAddTally />}/>
+              <Route path="/list" element={<TallyListPage />}/>
+              {/* obsługa nieistniejących ścieżek */}
+              <Route path="*" element={< NotFound />} />
+          </Routes>
+      </BrowserRouter>
   </React.StrictMode>
 );
 
