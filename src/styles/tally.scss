@@ -1,0 +1,23 @@
+.tally {
+  &__tr {
+    //background-color: rgb(241, 242, 242);
+    background-color: rgb(209, 218, 218);
+
+    color: #000;
+    border: none;
+    //border-bottom: black dotted 1px;
+    text-align: center;
+  }
+
+  &__link {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 0.7rem;
+  }
+}
+
+td {
+  border-bottom: 2.3px dotted #000;
+}
+
