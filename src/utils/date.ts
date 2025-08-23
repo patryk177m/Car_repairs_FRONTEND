@@ -11,3 +11,9 @@ export const fullDate = (time: Date) => {
 
     return `${day}.${numberMonth}.${year}`;
 };
+
+export const convertToDate = (date: Date) => {
+    if (!date) return null;
+    const convertDate = new Date(date);
+    return convertDate > new Date() ? "tak" : "nie";
+}
