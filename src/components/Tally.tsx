@@ -1,8 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import {TallyType} from "../types/tally";
 import "../styles/tally.scss"
 import {Link} from "react-router";
-import {convertToDate, fullDate} from "../utils/date";
+import {calcGuarantee, checkGuarantee, convertToDate, fullDate} from "../utils/date";
 import cn from "classnames";
 
 type Props = {
@@ -10,6 +10,8 @@ type Props = {
 }
 
 export const Tally: React.FC<Props> = ({tally}: Props) => {
+    const dateValid = convertToDate(tally!.guarantee_time);
+    const mileageValid = calcGuarantee(tally!.mileage_before_service, tally!.current_mileage, tally!.warranty_by_mileage);
 
     return (
         <tr className="tally__tr">
@@ -19,10 +21,9 @@ export const Tally: React.FC<Props> = ({tally}: Props) => {
             <td>{tally?.cost}</td>
             <td>{tally?.service}</td>
             <td>{tally?.mechanic}</td>
-            <td className={cn("colortext", {
-                'colortext--red': convertToDate(tally!.guarantee_time) === "nie",
-                'colortext--green': convertToDate(tally!.guarantee_time) === "tak"
-            })}>{convertToDate(tally!.guarantee_time)}</td>
+            <td className={cn("colortext--red",{
+                'colortext--green': checkGuarantee(dateValid, mileageValid) === "tak",
+            })}>{checkGuarantee(dateValid, mileageValid)}</td>
             <td>{!tally?.guarantee_time ? "-" : fullDate(tally?.guarantee_time as Date)}</td>
             <td>{tally?.current_mileage}</td>
             <td>{tally?.mileage_before_service}</td>
