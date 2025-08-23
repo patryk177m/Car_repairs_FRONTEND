@@ -8,6 +8,12 @@ export const api = axios.create({
     headers: { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/json' }
 })
 
+export const getTallies = async () => {
+    const response = await api.get<TallyType[]>("/list");
+   return response.data as TallyType[];
+    // console.log(response.data);
+}
+
 export const createTally = async (tally: TallyType) => {
     const {
         replaced,

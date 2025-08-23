@@ -1,5 +1,5 @@
 export type TallyType = {
-    // id: UUID,
+    id: string,
     replaced: string,
     date_replaced: Date,
     part_brand: string,
