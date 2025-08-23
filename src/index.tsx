@@ -19,10 +19,10 @@ root.render(
       <BrowserRouter>
           <Header/>
           <Routes>
-              <Route path="/" element={< App />} />
-              <Route index element={< Home />} />
-              <Route path="/add" element={< FormAddTally />}/>
-              <Route path="/list" element={< TallyListPage />}/>
+              <Route path="/" element={<App />} />
+              <Route index element={<Home />} />
+              <Route path="/add" element={<FormAddTally />}/>
+              <Route path="/list" element={<TallyListPage />}/>
               {/* obsługa nieistniejących ścieżek */}
               <Route path="*" element={< NotFound />} />
           </Routes>
