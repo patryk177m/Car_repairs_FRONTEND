@@ -36,8 +36,9 @@ export const TallyListPage = () => {
                     <th>Aktualny przebieg</th>
                     <th>Przebieg przed naprawą</th>
                     <th>Gwarancja wg przebiegu</th>
-                    <th>Dokumentu</th>
+                    <th>Dokument</th>
                     <th colSpan={2}>Uwagi</th>
+                    <th>Opcje</th>
                 </tr>
             </thead>
             <tbody>

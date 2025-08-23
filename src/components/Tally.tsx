@@ -24,7 +24,7 @@ export const Tally: React.FC<Props> = ({tally}: Props) => {
             <td>{tally?.warranty_by_mileage}</td>
             <td></td>
             <td colSpan={2}><Link className="tally__link" to="">{tally?.comments}</Link></td>
-            <td></td>
+            <td><span>TODO</span></td>
         </tr>
     )
 }
