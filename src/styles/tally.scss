@@ -15,6 +15,14 @@
     cursor: pointer;
     font-size: 0.7rem;
   }
+
+  &__input {
+
+    &--file {
+      width: 100px;
+      font-size: 0.7rem;
+    }
+  }
 }
 
 td {
@@ -32,3 +40,19 @@ td {
   }
 }
 
+.custom-file-upload {
+  background-color: rgb(209, 218, 218);
+  height: 12px;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block; /* Aby wyglądało jak przycisk */
+}
+.custom-file-upload:hover {
+  background-color: rgb(167, 177, 177);
+}
+
+.icon__upload {
+  height: 18px;
+}
