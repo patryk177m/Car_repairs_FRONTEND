@@ -51,7 +51,7 @@ export const FormAddTally: React.FC = () => {
             <input className="form__input" onChange={handleChange} value={tally?.mechanic} type="text" name="mechanic" required/>
 
             <label className="form__label" htmlFor="guarantee"> Czy gwarancja </label>
-            <input className="form__input" onChange={handleChange} value={String(tally?.guarantee)} type="text" name="guarantee" required/>
+            <input className="form__input" onChange={handleChange} value={String(tally?.guarantee) === "undefined" ? "" : String(tally?.guarantee)} type="text" name="guarantee" required/>
 
             <label className="form__label" htmlFor="guarantee_time"> Czas do końca gwarancji </label>
             <input className="form__input" onChange={handleChange} value={String(tally?.guarantee_time)} type="date" name="guarantee_time" required/>
