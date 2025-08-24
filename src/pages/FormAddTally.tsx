@@ -64,9 +64,11 @@ export const FormAddTally: React.FC = () => {
             <label className="form__label" htmlFor="warranty_by_mileage"> Gwarancja wg przebiegu </label>
             <input className="form__input" onChange={handleChange} value={tally?.warranty_by_mileage} type="text" id="warranty_by_mileage" name="warranty_by_mileage" />
 
-            <label className="form__label" htmlFor="document_title"> Dodaj dokument </label>
-            <input className="form__input" onChange={handleChange} value={tally?.document_title} type="file" id="document_title" name="document_title" />
-
+            <label className="form__label label--added--file" htmlFor="document_title">Dodaj plik</label>
+            <label className="form__label label--added" htmlFor="document_title">
+                <img className="icon__upload" src="/img/wgrywanie.png" alt="wgrywanie"/>
+                <input className="form__input input--added"  onChange={handleChange} value={tally?.document_title} type="file" id="document_title" name="document_title" />
+            </label>
             <label className="form__label" htmlFor="documentURL"> Adres URL dokumentu </label>
             <input className="form__input" onChange={handleChange} value={tally?.documentURL} type="text" id="documentURL" name="documentURL" />
 
