@@ -39,4 +39,42 @@
   }
 }
 
+.label--added {
+  //display: flex;
+  //flex-direction: column;
+  background-color: rgb(167, 177, 177);
+  height: 12px;
+  color: white;
+  padding: 10px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+
+  //&--file {
+  //  display: flex;
+  //  justify-content: space-between;
+  //}
+
+  &:hover {
+    background-color: rgb(209, 218, 218);
+  }
+}
+
+.icon__upload {
+  height: 24px;
+  width: 24px;
+  margin-left: 10px;
+  margin-right: 5px;
+}
+
+input[type="file"]::file-selector-button {
+  display: none;
+}
+
+input[type="file"] {
+  height: 24px;
+  width: 370px;
+}
+
 
