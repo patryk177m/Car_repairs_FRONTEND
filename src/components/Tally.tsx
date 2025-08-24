@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {TallyType} from "../types/tally";
 import "../styles/tally.scss"
 import {Link} from "react-router";
@@ -28,7 +28,13 @@ export const Tally: React.FC<Props> = ({tally}: Props) => {
             <td>{tally?.current_mileage}</td>
             <td>{tally?.mileage_before_service}</td>
             <td>{tally?.warranty_by_mileage}</td>
-            <td></td>
+            <td>
+
+                <label htmlFor="custom-file-upload" className="custom-file-upload">
+                    <input type="file" id="custom-file-upload" style={{ display: 'none' }}/>
+                    <img className="icon__upload" src="/img/wgrywanie.png" alt="wgrywanie"/>
+                </label>
+            </td>
             <td colSpan={2}><Link className="tally__link" to="">{tally?.comments}</Link></td>
             <td><span>TODO</span></td>
         </tr>
