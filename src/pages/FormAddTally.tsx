@@ -3,17 +3,18 @@ import  "../styles/formAddTally.scss";
 import "../styles/global.scss";
 import {createTally} from "../utils/api";
 import {TallyType} from "../types/tally";
+import axios from "axios";
 
 export const FormAddTally: React.FC = () => {
     const [tally, setTally] = useState<TallyType | undefined>();
-
+    const [file, setFile] = useState<File | null>(null);
+    const [fileName, setFileName] = useState<string>("");
+    const [message, setMessage] = useState<string>("");
 
     const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
        e.preventDefault();
         if (!tally) return;
-        await createTally(tally);
-
-        return null
+        await handleUpload().then(data => createTally({...tally, documentURL: data }));
     }
 
     const handleChange = (
@@ -27,6 +28,36 @@ export const FormAddTally: React.FC = () => {
             ...prevData,
             [name]: value,
         }) as TallyType) ;
+    };
+
+    //send file
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            setFile(e.target.files[0]);
+            // console.log(e.target.files[0])
+            setFileName(e.target.files[0].name);
+            // setTally((prev) => ({
+            //     ...(prev ?? {}),
+            //     documentURL: fileName,
+            // } as TallyType));
+        }
+    };
+
+    const handleUpload = async () => {
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        try {
+            const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}upload`, formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+            setMessage(`Success: ${res.data.filename}`);
+            return res.data.fileName;
+        } catch (err) {
+            setMessage("Error uploading file data.");
+        }
     };
 
     return (
@@ -67,10 +98,11 @@ export const FormAddTally: React.FC = () => {
             <label className="form__label label--added--file" htmlFor="document_title">Dodaj plik</label>
             <label className="form__label label--added" htmlFor="document_title">
                 <img className="icon__upload" src="/img/wgrywanie.png" alt="wgrywanie"/>
-                <input className="form__input input--added"  onChange={handleChange} value={tally?.document_title} type="file" id="document_title" name="document_title" />
+                <input className="form__input input--added"  onChange={handleFileChange} type="file" id="document_title" name="document_title" />
+                <p>{message}</p>
             </label>
             <label className="form__label" htmlFor="documentURL"> Adres URL dokumentu </label>
-            <input className="form__input" onChange={handleChange} value={tally?.documentURL} type="text" id="documentURL" name="documentURL" />
+            <input className="form__input" onChange={handleChange} value={fileName} type="text" id="documentURL" name="documentURL" />
 
             <label className="form__label" htmlFor="comments"> Uwagi </label>
             <textarea className="form__textarea" onChange={handleChange} value={tally?.comments} id="comments" name="comments" />

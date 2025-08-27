@@ -45,7 +45,7 @@ export const createTally = async (tally: TallyType) => {
         mileage_before_service,
         warranty_by_mileage,
         document_title,
-        documentURL
+        documentURL,
     }).then((response) => console.log(response.data))
         .catch((error) => console.log(error));
 }

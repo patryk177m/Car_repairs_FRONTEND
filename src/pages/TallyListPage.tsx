@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/tallyListPage.scss";
 import { TallyType } from "../types/tally";
 import { getTallies } from "../utils/api";
@@ -18,7 +18,6 @@ export const TallyListPage = () => {
         };
 
         fetchTallies();
-
 
     }, []);
 
@@ -52,6 +51,5 @@ export const TallyListPage = () => {
             </tbody>
 
         </table>
-
     )
 }
