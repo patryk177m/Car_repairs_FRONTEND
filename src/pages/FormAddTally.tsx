@@ -14,7 +14,7 @@ export const FormAddTally: React.FC = () => {
     const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
        e.preventDefault();
         if (!tally) return;
-        await handleUpload().then(data => createTally({...tally, documentURL: data }));
+        await uploadFile().then(data => createTally({...tally, documentURL: data }));
     }
 
     const handleChange = (
@@ -38,7 +38,7 @@ export const FormAddTally: React.FC = () => {
         }
     };
 
-    const handleUpload = async () => {
+    const uploadFile = async () => {
         if (!file) return;
 
         const formData = new FormData();
