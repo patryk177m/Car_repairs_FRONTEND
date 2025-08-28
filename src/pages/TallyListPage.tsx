@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "../styles/tallyListPage.scss";
-import { TallyType } from "../types/tally";
+
 import { getTallies } from "../utils/api";
 import { Tally } from "../components/Tally";
+import {useTallyContext} from "../context/TallyContext";
 
 export const TallyListPage = () => {
-    const [tallies, setTallies] = useState<TallyType[]>([]);
+    const { tallies, setTalliesContext} = useTallyContext();
 
     useEffect(() => {
         const fetchTallies = async () => {
             try {
                 const response = await getTallies();
-                setTallies(response);
+                setTalliesContext(response);
             } catch (err) {
                 console.log(err);
             }

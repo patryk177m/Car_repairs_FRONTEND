@@ -5,7 +5,6 @@ type TallyContextType = {
     tallies: TallyType[];
     setTallies: (allies: TallyType[]) => void;
     setTalliesContext: (tallies: TallyType[]) => void;
-
 }
 
 const TallyContext = createContext<TallyContextType | undefined>(undefined);
