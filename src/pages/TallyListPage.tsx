@@ -7,12 +7,6 @@ import { Tally } from "../components/Tally";
 export const TallyListPage = () => {
     const [tallies, setTallies] = useState<TallyType[]>([]);
 
-    const deleteTallyById = (id: string)=> {
-        if (!id) return;
-        const tallyList = tallies.filter(tally => tally.id !== id);
-        setTallies(tallyList);
-    }
-
     useEffect(() => {
         const fetchTallies = async () => {
             try {
@@ -50,9 +44,10 @@ export const TallyListPage = () => {
             <tbody>
                 {tallies.length <= 0 || tallies.map((v) => {
                     return (<Tally
-                        tally={v}
                         key={v.id}
-                        deleteTallyById={deleteTallyById}
+                        tally={v}
+                        tallies={tallies}
+                        setTallies={setTallies}
                     />)
                 })}
             </tbody>

@@ -9,14 +9,19 @@ import {deleteTally} from "../utils/api";
 
 type Props = {
     tally: TallyType;
-    deleteTallyById: (id: string) => void;
+    tallies: TallyType[];
+    setTallies: (tally: TallyType[]) => void;
 }
 
-export const Tally: React.FC<Props> = ({ tally, deleteTallyById }: Props) => {
+export const Tally: React.FC<Props> = ({ tally, tallies, setTallies }: Props) => {
     const dateValid = convertToDate(tally!.guarantee_time);
     const mileageValid = calcGuarantee(tally!.mileage_before_service, tally!.current_mileage, tally!.warranty_by_mileage);
 
-
+    const deleteTallyById = (id: string)=> {
+        if (!id) return;
+        const tallyList = tallies.filter(tally => tally.id !== id);
+        setTallies(tallyList);
+    }
 
     const handleDelete = async (id: string) => {
         if (!id) return;
