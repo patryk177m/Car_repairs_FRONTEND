@@ -6,14 +6,15 @@ import {calcGuarantee, checkGuarantee, convertToDate, fullDate} from "../utils/d
 import cn from "classnames";
 import {FileDownload} from "./fileDownload";
 import {deleteTally} from "../utils/api";
+import {useTallyContext} from "../context/TallyContext";
 
 type Props = {
     tally: TallyType;
-    tallies: TallyType[];
-    setTallies: (tally: TallyType[]) => void;
 }
 
-export const Tally: React.FC<Props> = ({ tally, tallies, setTallies }: Props) => {
+export const Tally: React.FC<Props> = ({ tally }: Props) => {
+    const { tallies, setTallies } = useTallyContext();
+
     const dateValid = convertToDate(tally!.guarantee_time);
     const mileageValid = calcGuarantee(tally!.mileage_before_service, tally!.current_mileage, tally!.warranty_by_mileage);
 

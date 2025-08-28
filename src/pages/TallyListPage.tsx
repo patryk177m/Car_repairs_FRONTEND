@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "../styles/tallyListPage.scss";
 import { Tally } from "../components/Tally";
-import {useTallyContext} from "../context/TallyContext";
+import { useTallyContext } from "../context/TallyContext";
 
 export const TallyListPage = () => {
     const { tallies, fetchTallies} = useTallyContext();
@@ -36,8 +36,6 @@ export const TallyListPage = () => {
                     return (<Tally
                         key={v.id}
                         tally={v}
-                        tallies={tallies}
-                        setTallies={setTallies}
                     />)
                 })}
             </tbody>
