@@ -10,8 +10,7 @@ export const api = axios.create({
 
 export const getTallies = async () => {
     const response = await api.get<TallyType[]>("/list");
-   return response.data as TallyType[];
-    // console.log(response.data);
+    return response.data as TallyType[];
 }
 
 export const createTally = async (tally: TallyType) => {
@@ -48,4 +47,9 @@ export const createTally = async (tally: TallyType) => {
         documentURL,
     }).then((response) => console.log(response.data))
         .catch((error) => console.log(error));
+}
+
+export const deleteTally = async (id: string) => {
+    if (!id) return;
+    return await api.delete(`/delete/${id}`);
 }

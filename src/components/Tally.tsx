@@ -5,14 +5,23 @@ import {Link} from "react-router";
 import {calcGuarantee, checkGuarantee, convertToDate, fullDate} from "../utils/date";
 import cn from "classnames";
 import {FileDownload} from "./fileDownload";
+import {deleteTally} from "../utils/api";
 
 type Props = {
     tally: TallyType;
+    deleteTallyById: (id: string) => void;
 }
 
-export const Tally: React.FC<Props> = ({tally}: Props) => {
+export const Tally: React.FC<Props> = ({ tally, deleteTallyById }: Props) => {
     const dateValid = convertToDate(tally!.guarantee_time);
     const mileageValid = calcGuarantee(tally!.mileage_before_service, tally!.current_mileage, tally!.warranty_by_mileage);
+
+
+
+    const handleDelete = async (id: string) => {
+        if (!id) return;
+        await deleteTally(id).then(() => deleteTallyById(id));
+    }
 
     return (
         <>
@@ -44,7 +53,7 @@ export const Tally: React.FC<Props> = ({tally}: Props) => {
                     <img className="options__icon"  src="/img/edit.svg" alt="edit"/>
                 </label>
                 <label className="custom-file-upload options--label option option--delete">
-                    <img className="options__icon" src="/img/delete.svg" alt="delete"/>
+                    <img onClick={(e) => handleDelete(tally.id)} className="options__icon" src="/img/delete.svg" alt="delete"/>
                 </label>
             </td>
         </tr>
