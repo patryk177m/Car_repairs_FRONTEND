@@ -10,8 +10,8 @@ export const FileDownload:React.FC<Props> = ({tally}: Props)=> {
     const handleDownload = async () => {
         try {
             const response = await axios.get(
-                `${process.env.REACT_APP_SERVER_URL}uploads/${tally.documentURL}`, // <-- tutaj Twój plik
-                { responseType: "blob" } // ważne!
+                `${process.env.REACT_APP_SERVER_URL}uploads/${tally.documentURL}`,
+                { responseType: "blob" }
             );
 
             // Tworzymy adres URL dla pobranego pliku
