@@ -10,8 +10,8 @@ export const FileDownload:React.FC<Props> = ({tally}: Props)=> {
     const handleDownload = async () => {
         try {
             const response = await axios.get(
-                `${process.env.REACT_APP_SERVER_URL}uploads/${tally.documentURL}`, // <-- tutaj Twój plik
-                { responseType: "blob" } // ważne!
+                `${process.env.REACT_APP_SERVER_URL}uploads/${tally.documentURL}`,
+                { responseType: "blob" }
             );
 
             // Tworzymy adres URL dla pobranego pliku
@@ -33,11 +33,7 @@ export const FileDownload:React.FC<Props> = ({tally}: Props)=> {
     };
 
     return (
-        // <div>
-        //     <button onClick={handleDownload}>Pobierz plik</button>
-        // </div>
         <label htmlFor="custom-file-upload" className="custom-file-upload">
-            {/*<input type="file" id="custom-file-upload" style={{ display: 'none' }}/>*/}
             <img onClick={handleDownload} className="icon__upload" src="/img/wgrywanie.png" alt="wgrywanie"/>
         </label>
     );

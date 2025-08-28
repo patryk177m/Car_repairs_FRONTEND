@@ -34,8 +34,10 @@ export const TallyListPage = () => {
             <tbody>
                 {tallies.length <= 0 || tallies.map((v) => {
                     return (<Tally
-                        tally={v}
                         key={v.id}
+                        tally={v}
+                        tallies={tallies}
+                        setTallies={setTallies}
                     />)
                 })}
             </tbody>

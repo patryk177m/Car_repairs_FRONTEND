@@ -23,6 +23,33 @@
       font-size: 0.7rem;
     }
   }
+
+  &__td--options {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.options {
+
+  &--label {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__icon {
+    width: 16px;
+  }
+}
+
+.option {
+  &--edit {
+  }
+
+  &--delete {
+  }
 }
 
 td {
@@ -44,10 +71,12 @@ td {
   background-color: rgb(209, 218, 218);
   height: 12px;
   color: white;
-  padding: 10px 15px;
+  padding: 10px 7px;
   border-radius: 5px;
   cursor: pointer;
   display: inline-block; /* Aby wyglądało jak przycisk */
+
+
 }
 .custom-file-upload:hover {
   background-color: rgb(167, 177, 177);

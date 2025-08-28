@@ -5,17 +5,28 @@ import {Link} from "react-router";
 import {calcGuarantee, checkGuarantee, convertToDate, fullDate} from "../utils/date";
 import cn from "classnames";
 import {FileDownload} from "./fileDownload";
+import {deleteTally} from "../utils/api";
 
 type Props = {
     tally: TallyType;
+    tallies: TallyType[];
+    setTallies: (tally: TallyType[]) => void;
 }
 
-export const Tally: React.FC<Props> = ({tally}: Props) => {
-    // const [file, setFile] = useState<File | null>(null);
-    // const [fileName, setFileName] = useState<string>(tally.documentURL);
-
+export const Tally: React.FC<Props> = ({ tally, tallies, setTallies }: Props) => {
     const dateValid = convertToDate(tally!.guarantee_time);
     const mileageValid = calcGuarantee(tally!.mileage_before_service, tally!.current_mileage, tally!.warranty_by_mileage);
+
+    const deleteTallyById = (id: string)=> {
+        if (!id) return;
+        const tallyList = tallies.filter(tally => tally.id !== id);
+        setTallies(tallyList);
+    }
+
+    const handleDelete = async (id: string) => {
+        if (!id) return;
+        await deleteTally(id).then(() => deleteTallyById(id));
+    }
 
     return (
         <>
@@ -35,12 +46,21 @@ export const Tally: React.FC<Props> = ({tally}: Props) => {
             <td>{tally?.mileage_before_service}</td>
             <td>{tally?.warranty_by_mileage}</td>
             <td>
-                <FileDownload
+                { tally.documentURL &&
+                    (<FileDownload
                     tally={tally}
-                />
+                />)
+                }
             </td>
             <td colSpan={2}><Link className="tally__link" to="">{tally?.comments}</Link></td>
-            <td><span>TODO</span></td>
+            <td className="tally__td--options options">
+                <label className="custom-file-upload options--label option option--edit">
+                    <img className="options__icon"  src="/img/edit.svg" alt="edit"/>
+                </label>
+                <label className="custom-file-upload options--label option option--delete">
+                    <img onClick={(e) => handleDelete(tally.id)} className="options__icon" src="/img/delete.svg" alt="delete"/>
+                </label>
+            </td>
         </tr>
 
         </>
