@@ -1,23 +1,12 @@
 import React, { useEffect } from "react";
 import "../styles/tallyListPage.scss";
-
-import { getTallies } from "../utils/api";
 import { Tally } from "../components/Tally";
 import {useTallyContext} from "../context/TallyContext";
 
 export const TallyListPage = () => {
-    const { tallies, setTalliesContext} = useTallyContext();
+    const { tallies, fetchTallies} = useTallyContext();
 
     useEffect(() => {
-        const fetchTallies = async () => {
-            try {
-                const response = await getTallies();
-                setTalliesContext(response);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-
         fetchTallies();
 
     }, []);
