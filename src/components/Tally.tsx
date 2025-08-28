@@ -11,9 +11,6 @@ type Props = {
 }
 
 export const Tally: React.FC<Props> = ({tally}: Props) => {
-    // const [file, setFile] = useState<File | null>(null);
-    // const [fileName, setFileName] = useState<string>(tally.documentURL);
-
     const dateValid = convertToDate(tally!.guarantee_time);
     const mileageValid = calcGuarantee(tally!.mileage_before_service, tally!.current_mileage, tally!.warranty_by_mileage);
 
@@ -35,9 +32,11 @@ export const Tally: React.FC<Props> = ({tally}: Props) => {
             <td>{tally?.mileage_before_service}</td>
             <td>{tally?.warranty_by_mileage}</td>
             <td>
-                <FileDownload
+                { tally.documentURL &&
+                    (<FileDownload
                     tally={tally}
-                />
+                />)
+                }
             </td>
             <td colSpan={2}><Link className="tally__link" to="">{tally?.comments}</Link></td>
             <td><span>TODO</span></td>
