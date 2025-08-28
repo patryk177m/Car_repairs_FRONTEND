@@ -39,7 +39,14 @@ export const Tally: React.FC<Props> = ({tally}: Props) => {
                 }
             </td>
             <td colSpan={2}><Link className="tally__link" to="">{tally?.comments}</Link></td>
-            <td><span>TODO</span></td>
+            <td className="tally__td--options options">
+                <label className="custom-file-upload options--label option option--edit">
+                    <img className="options__icon"  src="/img/edit.svg" alt="edit"/>
+                </label>
+                <label className="custom-file-upload options--label option option--delete">
+                    <img className="options__icon" src="/img/delete.svg" alt="delete"/>
+                </label>
+            </td>
         </tr>
 
         </>
