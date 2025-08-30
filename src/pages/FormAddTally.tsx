@@ -5,16 +5,31 @@ import {createTally} from "../utils/api";
 import {TallyType} from "../types/tally";
 import axios from "axios";
 import {useTallyContext} from "../context/TallyContext";
-import { handleChange} from "../utils/utils";
 
-export const FormAddTally: React.FC = () => {
-    const [tally, setTally] = useState<TallyType | undefined>();
-    const { file, setFile, fileName, setFileName, message, setMessage } = useTallyContext();
+export const FormAddTally = () => {
+    const now = new Date();
+    const [tally, setTally] = useState<Omit<TallyType, "id">>({
+        replaced: "",
+        date_replaced: now,
+        part_brand: "",
+        cost: 0,
+        service: "",
+        mechanic: "",
+        guarantee: false,
+        guarantee_time: now,
+        comments: "",
+        current_mileage: 0,
+        mileage_before_service: 0,
+        warranty_by_mileage: 0,
+        document_title: "",
+        documentURL: "",
+    });
+    const { file, setFile, fileName, setFileName, message, setMessage, handleChange } = useTallyContext();
 
     const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
        e.preventDefault();
         if (!tally) return;
-        await uploadFile().then(data => createTally({...tally, documentURL: data }));
+        await uploadFile().then((data: string) => createTally({...tally, documentURL: data }));
     }
 
     //send file
