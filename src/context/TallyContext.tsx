@@ -8,11 +8,11 @@ type TallyContextType = {
     setTallies: (allies: TallyType[]) => void;
     fetchTallies: () => Promise<TallyType[] | undefined>;
     file: File | null;
-    setFile: (file: File) => void;
+    setFile: Dispatch<SetStateAction<File | null>>;
     fileName: string;
-    setFileName: (fileName: string) => void;
+    setFileName: Dispatch<SetStateAction<string>>;
     message: string;
-    setMessage: (message: string) => void;
+    setMessage: Dispatch<SetStateAction<string>>
     // selectedTally: TallyType;
     // setSelectedTally: (tally: TallyType) => void;
     handleChange: <T extends object>(e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>, fn: Dispatch<SetStateAction<T>>) => void;

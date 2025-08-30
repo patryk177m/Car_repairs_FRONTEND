@@ -60,3 +60,9 @@ export const deleteTally = async (id: string) => {
     if (!id) return;
     return await api.delete(`/delete/${id}`);
 }
+
+export const updateTally = async (id: string, tally: Omit<TallyType, "id">) => {
+    if (!id) return;
+    const response = await api.put(`/update/${id}`, tally);
+    return response.data;
+}

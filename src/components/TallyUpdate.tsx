@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {useTallyContext} from "../context/TallyContext";
-import {createTally, getTallyById} from "../utils/api";
-import axios from "axios";
+import {getTallyById, updateTally} from "../utils/api";
 import {TallyType} from "../types/tally";
 import {useParams} from "react-router";
+import {handleFileChange, uploadFile} from "../utils/utils";
 
 export const FileUpdate = () => {
     const { handleChange, setFile, setFileName, fileName, file, setMessage, message} = useTallyContext();
@@ -32,33 +32,9 @@ export const FileUpdate = () => {
 
     const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
-        await uploadFile().then((data: string) => createTally({...selectedTally, documentURL: data }));
+        if (!id) return;
+        await uploadFile(file, setMessage).then((data: string) => updateTally(id, {...selectedTally, documentURL: data }));
     }
-
-    //send file
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            setFile(e.target.files[0]);
-            setFileName(e.target.files[0].name);
-        }
-    };
-
-    const uploadFile = async () => {
-        if (!file) return;
-
-        const formData = new FormData();
-        formData.append("file", file);
-
-        try {
-            const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}upload`, formData, {
-                headers: { "Content-Type": "multipart/form-data" },
-            });
-            setMessage(`Success: ${res.data.filename}`);
-            return res.data.fileName;
-        } catch (err) {
-            setMessage("Error uploading file data.");
-        }
-    };
 
     useEffect(() => {
         if (!id) return;
@@ -78,8 +54,8 @@ export const FileUpdate = () => {
 
                 <label className="form__label" htmlFor="date_replaced"> Data wymiany </label>
                 <input className="form__input" onChange={e => handleChange(e, setSelectedTally)}
-                       value={String(selectedTally?.date_replaced)} type="date" id="date_replaced" name="date_replaced"
-                       required/>
+                       value={String(selectedTally?.date_replaced) ? new Date(selectedTally.date_replaced).toISOString().split("T")[0]
+                           : ""} type="date" id="date_replaced" name="date_replaced" required/>
 
                 <label className="form__label" htmlFor="part_brand"> Marka części </label>
                 <input className="form__input" onChange={e => handleChange(e, setSelectedTally)}
@@ -104,8 +80,8 @@ export const FileUpdate = () => {
 
                 <label className="form__label" htmlFor="guarantee_time"> Czas do końca gwarancji </label>
                 <input className="form__input" onChange={e => handleChange(e, setSelectedTally)}
-                       value={String(selectedTally?.guarantee_time)} type="date" id="guarantee_time"
-                       name="guarantee_time"/>
+                       value={String(selectedTally?.guarantee_time) ? new Date(selectedTally.guarantee_time).toISOString().split("T")[0]
+                           : ""} type="date" id="guarantee_time" name="guarantee_time"/>
 
                 <label className="form__label" htmlFor="current_mileage"> Aktualny przebieg </label>
                 <input className="form__input" onChange={e => handleChange(e, setSelectedTally)}
@@ -124,7 +100,7 @@ export const FileUpdate = () => {
                 <label className="form__label label--added--file" htmlFor="document_title">Dodaj plik</label>
                 <label className="form__label label--added" htmlFor="document_title">
                     <img className="icon__upload" src="/img/wgrywanie.png" alt="wgrywanie"/>
-                    <input className="form__input input--added" onChange={handleFileChange} type="file"
+                    <input className="form__input input--added" onChange={(e) => handleFileChange(e, setFile, setFileName)} type="file"
                            id="document_title" name="document_title"/>
                     <p>{message}</p>
                 </label>
@@ -136,7 +112,7 @@ export const FileUpdate = () => {
                 <textarea className="form__textarea" onChange={e => handleChange(e, setSelectedTally)}
                           value={selectedTally?.comments} id="comments" name="comments"/>
 
-                <button className="form__button" type="submit">Zapisz</button>
+                <button className="form__button" type="submit">Zaktualizuj</button>
             </form>
             }
         </>
