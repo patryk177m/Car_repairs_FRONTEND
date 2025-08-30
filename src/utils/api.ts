@@ -13,7 +13,13 @@ export const getTallies = async () => {
     return response.data as TallyType[];
 }
 
-export const createTally = async (tally: TallyType) => {
+export const getTallyById = async (id: string) => {
+    if (!id) return;
+    const response = await api.get<TallyType>(`/list/${id}`);
+    return response.data as TallyType;
+}
+
+export const createTally = async (tally: Omit<TallyType, "id">) => {
     const {
         replaced,
         date_replaced,
@@ -28,7 +34,8 @@ export const createTally = async (tally: TallyType) => {
         mileage_before_service,
         warranty_by_mileage,
         document_title,
-        documentURL } = tally;
+        documentURL,
+    } = tally;
     console.log(tally)
     return await api.post("/add", {
         replaced,

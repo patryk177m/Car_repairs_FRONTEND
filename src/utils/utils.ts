@@ -1,14 +1,13 @@
-import React from "react";
-import {TallyType} from "../types/tally";
+import {ChangeEvent, Dispatch, SetStateAction} from "react";
 
-export const handleChange = (
-    e: React.ChangeEvent<
-        HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >, fn: React.Dispatch<React.SetStateAction<TallyType | undefined>>) => {
-    const { name, value } = e.target as HTMLInputElement;
+export const changeValue = <T extends object> (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
+    fn: Dispatch<SetStateAction<T>>
+) => {
+    const { name, value } = e.target;
 
-    fn((prevData: TallyType | undefined) => ({
-        ...prevData,
+    fn(prev => ({
+        ...prev,
         [name]: value,
-    }) as TallyType) ;
+    }));
 };
