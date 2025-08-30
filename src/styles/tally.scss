@@ -85,3 +85,21 @@ td {
 .icon__upload {
   height: 18px;
 }
+
+.comment {
+  &--field {
+    width: 250px;
+
+  }
+}
+
+.comment--bold {
+  font-weight: bold;
+
+  &:hover {
+    background-color: rgb(167, 177, 177);
+    cursor: pointer;
+  }
+
+
+}

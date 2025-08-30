@@ -1,14 +1,65 @@
-import React from "react";
-import {TallyType} from "../types/tally";
+import {ChangeEvent, Dispatch, SetStateAction} from "react";
+import axios from "axios";
 
-export const handleChange = (
-    e: React.ChangeEvent<
-        HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >, fn: React.Dispatch<React.SetStateAction<TallyType | undefined>>) => {
-    const { name, value } = e.target as HTMLInputElement;
+export const changeValue = <T extends object> (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
+    fn: Dispatch<SetStateAction<T>>
+) => {
+    const { name, value } = e.target;
 
-    fn((prevData: TallyType | undefined) => ({
-        ...prevData,
+    fn(prev => ({
+        ...prev,
         [name]: value,
-    }) as TallyType) ;
+    }));
 };
+
+
+//send file
+export const handleFileChange =  (e: ChangeEvent<HTMLInputElement>, setFile: Dispatch<SetStateAction<File | null>>, setFileName: Dispatch<SetStateAction<string>>) => {
+    if (e.target.files && e.target.files[0]) {
+        setFile(e.target.files[0]);
+        setFileName(e.target.files[0].name);
+    } else {
+        setFile(null);
+        setFileName("");
+    }
+};
+
+export const uploadFile = async (file: File | null, setMessage :Dispatch<SetStateAction<string>>) => {
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+        const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}upload`, formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+        });
+        setMessage(`Success`);
+        return res.data.fileName;
+    } catch (err) {
+        setMessage("Error uploading file data.");
+    }
+};
+
+
+// short content
+export const shortContent = (content: string, index: number) => {
+    if (!content) return;
+    let shortContent = content;
+    if (content.length > index) {
+      shortContent = `${content.substring(0, index)}  ...`;
+    }
+
+    return shortContent;
+}
+
+// add and remove class
+
+export const addClass = (titleClass: string, addTitleClass: string) => {
+    return  document.querySelector(`.${titleClass}`)?.classList.add(addTitleClass);
+}
+
+export const removeClass = (titleClass: string, removeTitleClass: string) => {
+    return  document.querySelector(`.${titleClass}`)?.classList.remove(removeTitleClass);
+}

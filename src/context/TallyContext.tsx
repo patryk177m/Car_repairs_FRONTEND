@@ -1,17 +1,21 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {createContext, useContext, useState, ChangeEvent, Dispatch, SetStateAction, ReactNode} from "react";
 import {TallyType} from "../types/tally";
 import {getTallies} from "../utils/api";
+import {changeValue} from "../utils/utils";
 
 type TallyContextType = {
     tallies: TallyType[];
     setTallies: (allies: TallyType[]) => void;
     fetchTallies: () => Promise<TallyType[] | undefined>;
     file: File | null;
-    setFile: (file: File) => void;
+    setFile: Dispatch<SetStateAction<File | null>>;
     fileName: string;
-    setFileName: (fileName: string) => void;
+    setFileName: Dispatch<SetStateAction<string>>;
     message: string;
-    setMessage: (message: string) => void;
+    setMessage: Dispatch<SetStateAction<string>>
+    handleChange: <T extends object>(e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>, fn: Dispatch<SetStateAction<T>>) => void;
+    comment: string;
+    setComment: Dispatch<SetStateAction<string>>;
 }
 
 const TallyContext = createContext<TallyContextType | undefined>(undefined);
@@ -22,7 +26,7 @@ export const TallyProvider = ({ children }: { children: ReactNode }) => {
     const [file, setFile] = useState<File | null>(null);
     const [fileName, setFileName] = useState<string>("");
     const [message, setMessage] = useState<string>("");
-    // const [selectedTally, setSelectedTally] = useState<TallyType | null>(null);
+    const [comment ,setComment] = useState<string>("");
 
     const fetchTallies = async () => {
         try {
@@ -32,6 +36,11 @@ export const TallyProvider = ({ children }: { children: ReactNode }) => {
         } catch (err) {
             console.log(err);
         }
+    }
+
+    const handleChange = <T extends object> (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>, fn: Dispatch<SetStateAction<T>>) => {
+        if (!fn) return;
+        changeValue<T>(e, fn);
     }
 
 
@@ -47,8 +56,9 @@ export const TallyProvider = ({ children }: { children: ReactNode }) => {
                     setFileName,
                     message,
                     setMessage,
-                    // selectedTally,
-                    // setSelectedTally,
+                    handleChange,
+                    comment,
+                    setComment,
 
             }
         }>

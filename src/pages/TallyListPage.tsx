@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import "../styles/tallyListPage.scss";
-import { Tally } from "../components/Tally";
+import {Tally} from "../components/Tally";
 import {useTallyContext} from "../context/TallyContext";
+import {ShowComment} from "../components/ShowComment";
 
 export const TallyListPage = () => {
-    const { tallies, fetchTallies} = useTallyContext();
+    const {tallies, fetchTallies} = useTallyContext();
 
     useEffect(() => {
         fetchTallies();
@@ -12,8 +13,9 @@ export const TallyListPage = () => {
     }, []);
 
     return (
-        <table className="global--container table">
-            <thead>
+        <>
+            <table className="global--container table">
+                <thead>
                 <tr>
                     <th>Co wymieniono</th>
                     <th>Data wymiany</th>
@@ -27,21 +29,20 @@ export const TallyListPage = () => {
                     <th>Przebieg przed naprawą</th>
                     <th>Gwarancja wg przebiegu</th>
                     <th>Dokument</th>
-                    <th colSpan={2}>Uwagi</th>
+                    <th>Uwagi</th>
                     <th>Opcje</th>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 {tallies.length <= 0 || tallies.map((v) => {
                     return (<Tally
                         key={v.id}
                         tally={v}
-                        tallies={tallies}
-                        setTallies={setTallies}
                     />)
                 })}
-            </tbody>
-
-        </table>
+                </tbody>
+            </table>
+            <ShowComment />
+        </>
     )
 }
