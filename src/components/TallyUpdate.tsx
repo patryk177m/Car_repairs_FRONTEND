@@ -53,7 +53,7 @@ export const FileUpdate = () => {
             if (!data) return;
             setSelectedTally(data);
         })
-    }, []);
+    }, [id]);
 
     return (
         <>
