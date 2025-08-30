@@ -41,3 +41,25 @@ export const uploadFile = async (file: File | null, setMessage :Dispatch<SetStat
         setMessage("Error uploading file data.");
     }
 };
+
+
+// short content
+export const shortContent = (content: string, index: number) => {
+    if (!content) return;
+    let shortContent = content;
+    if (content.length > index) {
+      shortContent = `${content.substring(0, index)}  ...`;
+    }
+
+    return shortContent;
+}
+
+// add and remove class
+
+export const addClass = (titleClass: string, addTitleClass: string) => {
+    return  document.querySelector(`.${titleClass}`)?.classList.add(addTitleClass);
+}
+
+export const removeClass = (titleClass: string, removeTitleClass: string) => {
+    return  document.querySelector(`.${titleClass}`)?.classList.remove(removeTitleClass);
+}

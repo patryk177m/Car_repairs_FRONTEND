@@ -13,9 +13,9 @@ type TallyContextType = {
     setFileName: Dispatch<SetStateAction<string>>;
     message: string;
     setMessage: Dispatch<SetStateAction<string>>
-    // selectedTally: TallyType;
-    // setSelectedTally: (tally: TallyType) => void;
     handleChange: <T extends object>(e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>, fn: Dispatch<SetStateAction<T>>) => void;
+    comment: string;
+    setComment: Dispatch<SetStateAction<string>>;
 }
 
 const TallyContext = createContext<TallyContextType | undefined>(undefined);
@@ -26,26 +26,7 @@ export const TallyProvider = ({ children }: { children: ReactNode }) => {
     const [file, setFile] = useState<File | null>(null);
     const [fileName, setFileName] = useState<string>("");
     const [message, setMessage] = useState<string>("");
-
-    // const now = new Date();
-    //
-    // const [selectedTally, setSelectedTally] = useState<TallyType>({
-    //     id: "",
-    //     replaced: "",
-    //     date_replaced: now,
-    //     part_brand: "",
-    //     cost: 0,
-    //     service: "",
-    //     mechanic: "",
-    //     guarantee: false,
-    //     guarantee_time: now,
-    //     comments: "",
-    //     current_mileage: 0,
-    //     mileage_before_service: 0,
-    //     warranty_by_mileage: 0,
-    //     document_title: "",
-    //     documentURL: "",
-    // });
+    const [comment ,setComment] = useState<string>("");
 
     const fetchTallies = async () => {
         try {
@@ -75,9 +56,9 @@ export const TallyProvider = ({ children }: { children: ReactNode }) => {
                     setFileName,
                     message,
                     setMessage,
-                    // selectedTally,
-                    // setSelectedTally,
                     handleChange,
+                    comment,
+                    setComment,
 
             }
         }>

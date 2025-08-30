@@ -7,7 +7,7 @@ import {calcGuarantee, checkGuarantee, convertToDate, fullDate} from "../utils/d
 import cn from "classnames";
 import {deleteTally} from "../utils/api";
 import {useTallyContext} from "../context/TallyContext";
-
+import {TallyComment} from "./TallyComment";
 
 type Props = {
     tally: TallyType;
@@ -15,6 +15,7 @@ type Props = {
 
 export const Tally: React.FC<Props> = ({tally}: Props) => {
     const {tallies, setTallies} = useTallyContext();
+    // const [comment, setComment] = useState<string>("");
 
     const navigate = useNavigate();
 
@@ -38,7 +39,6 @@ export const Tally: React.FC<Props> = ({tally}: Props) => {
 
     return (
         <>
-
             <tr className="tally__tr">
                 <td>{tally?.replaced}</td>
                 <td>{fullDate(tally?.date_replaced as Date)}</td>
@@ -57,10 +57,11 @@ export const Tally: React.FC<Props> = ({tally}: Props) => {
                     {tally.documentURL ?
                         (<FileDownload
                             tally={tally}
-                        />) : <img onClick={handleRedirectOnEdit} className="options__icon" src="/img/upload.svg" alt="edit icon"/>
+                        />) : <img onClick={handleRedirectOnEdit} className="options__icon" src="/img/upload.svg"
+                                   alt="edit icon"/>
                     }
                 </td>
-                <td colSpan={2}><Link className="tally__link" to="">{tally?.comments}</Link></td>
+                <TallyComment tally={tally} />
                 <td className="tally__td--options options">
                     <label className="custom-file-upload options--label option option--edit">
                         <Link to={`/update/${tally?.id}`}>
@@ -73,7 +74,6 @@ export const Tally: React.FC<Props> = ({tally}: Props) => {
                     </label>
                 </td>
             </tr>
-
         </>
     )
 }
