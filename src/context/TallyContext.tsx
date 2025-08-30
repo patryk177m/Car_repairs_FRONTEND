@@ -1,6 +1,7 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {createContext, useContext, useState, ChangeEvent, Dispatch, SetStateAction, ReactNode} from "react";
 import {TallyType} from "../types/tally";
 import {getTallies} from "../utils/api";
+import {changeValue} from "../utils/utils";
 
 type TallyContextType = {
     tallies: TallyType[];
@@ -12,6 +13,9 @@ type TallyContextType = {
     setFileName: (fileName: string) => void;
     message: string;
     setMessage: (message: string) => void;
+    // selectedTally: TallyType;
+    // setSelectedTally: (tally: TallyType) => void;
+    handleChange: <T extends object>(e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>, fn: Dispatch<SetStateAction<T>>) => void;
 }
 
 const TallyContext = createContext<TallyContextType | undefined>(undefined);
@@ -22,7 +26,26 @@ export const TallyProvider = ({ children }: { children: ReactNode }) => {
     const [file, setFile] = useState<File | null>(null);
     const [fileName, setFileName] = useState<string>("");
     const [message, setMessage] = useState<string>("");
-    // const [selectedTally, setSelectedTally] = useState<TallyType | null>(null);
+
+    // const now = new Date();
+    //
+    // const [selectedTally, setSelectedTally] = useState<TallyType>({
+    //     id: "",
+    //     replaced: "",
+    //     date_replaced: now,
+    //     part_brand: "",
+    //     cost: 0,
+    //     service: "",
+    //     mechanic: "",
+    //     guarantee: false,
+    //     guarantee_time: now,
+    //     comments: "",
+    //     current_mileage: 0,
+    //     mileage_before_service: 0,
+    //     warranty_by_mileage: 0,
+    //     document_title: "",
+    //     documentURL: "",
+    // });
 
     const fetchTallies = async () => {
         try {
@@ -32,6 +55,11 @@ export const TallyProvider = ({ children }: { children: ReactNode }) => {
         } catch (err) {
             console.log(err);
         }
+    }
+
+    const handleChange = <T extends object> (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>, fn: Dispatch<SetStateAction<T>>) => {
+        if (!fn) return;
+        changeValue<T>(e, fn);
     }
 
 
@@ -49,6 +77,7 @@ export const TallyProvider = ({ children }: { children: ReactNode }) => {
                     setMessage,
                     // selectedTally,
                     // setSelectedTally,
+                    handleChange,
 
             }
         }>
