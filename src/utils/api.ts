@@ -19,39 +19,7 @@ export const getTallyById = async (id: string) => {
 }
 
 export const createTally = async (tally: Omit<TallyType, "id">) => {
-    const {
-        replaced,
-        date_replaced,
-        part_brand,
-        cost,
-        service,
-        mechanic,
-        guarantee,
-        guarantee_time,
-        comments,
-        current_mileage,
-        mileage_before_service,
-        warranty_by_mileage,
-        document_title,
-        documentURL,
-    } = tally;
-    console.log(tally)
-    return await api.post("/add", {
-        replaced,
-        date_replaced,
-        part_brand,
-        cost,
-        service,
-        mechanic,
-        guarantee,
-        guarantee_time,
-        comments,
-        current_mileage,
-        mileage_before_service,
-        warranty_by_mileage,
-        document_title,
-        documentURL,
-    }).then((response) => console.log(response.data))
+    return await api.post("/add", tally).then((response) => response.data)
         .catch((error) => console.log(error));
 }
 
