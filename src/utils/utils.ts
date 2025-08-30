@@ -35,7 +35,7 @@ export const uploadFile = async (file: File | null, setMessage :Dispatch<SetStat
         const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}upload`, formData, {
             headers: { "Content-Type": "multipart/form-data" },
         });
-        setMessage(`Success: ${res.data.filename}`);
+        setMessage(`Success`);
         return res.data.fileName;
     } catch (err) {
         setMessage("Error uploading file data.");

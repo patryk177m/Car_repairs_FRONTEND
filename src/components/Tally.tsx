@@ -2,7 +2,7 @@ import React from "react";
 import {TallyType} from "../types/tally";
 import {FileDownload} from "./fileDownload";
 import "../styles/tally.scss"
-import {Link} from "react-router";
+import {Link, useNavigate} from "react-router";
 import {calcGuarantee, checkGuarantee, convertToDate, fullDate} from "../utils/date";
 import cn from "classnames";
 import {deleteTally} from "../utils/api";
@@ -16,6 +16,8 @@ type Props = {
 export const Tally: React.FC<Props> = ({tally}: Props) => {
     const {tallies, setTallies} = useTallyContext();
 
+    const navigate = useNavigate();
+
     const dateValid = convertToDate(tally!.guarantee_time);
     const mileageValid = calcGuarantee(tally!.mileage_before_service, tally!.current_mileage, tally!.warranty_by_mileage);
 
@@ -28,6 +30,10 @@ export const Tally: React.FC<Props> = ({tally}: Props) => {
     const handleDelete = async (id: string) => {
         if (!id) return;
         await deleteTally(id).then(() => deleteTallyById(id));
+    }
+
+    const handleRedirectOnEdit = () => {
+        navigate(`/update/${tally.id}`);
     }
 
     return (
@@ -51,7 +57,7 @@ export const Tally: React.FC<Props> = ({tally}: Props) => {
                     {tally.documentURL ?
                         (<FileDownload
                             tally={tally}
-                        />) : <img className="options__icon" src="/img/upload.svg" alt="edit icon"/>
+                        />) : <img onClick={handleRedirectOnEdit} className="options__icon" src="/img/upload.svg" alt="edit icon"/>
                     }
                 </td>
                 <td colSpan={2}><Link className="tally__link" to="">{tally?.comments}</Link></td>
