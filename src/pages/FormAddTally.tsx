@@ -3,8 +3,8 @@ import  "../styles/formAddTally.scss";
 import "../styles/global.scss";
 import {createTally} from "../utils/api";
 import {TallyType} from "../types/tally";
-import axios from "axios";
 import {useTallyContext} from "../context/TallyContext";
+import {handleFileChange, uploadFile} from "../utils/utils";
 
 export const FormAddTally = () => {
     const now = new Date();
@@ -29,33 +29,8 @@ export const FormAddTally = () => {
     const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
        e.preventDefault();
         if (!tally) return;
-        await uploadFile().then((data: string) => createTally({...tally, documentURL: data }));
+        await uploadFile(file, setMessage).then((data: string) => createTally({...tally, documentURL: data }));
     }
-
-    //send file
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            setFile(e.target.files[0]);
-            setFileName(e.target.files[0].name);
-        }
-    };
-
-    const uploadFile = async () => {
-        if (!file) return;
-
-        const formData = new FormData();
-        formData.append("file", file);
-
-        try {
-            const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}upload`, formData, {
-                headers: { "Content-Type": "multipart/form-data" },
-            });
-            setMessage(`Success: ${res.data.filename}`);
-            return res.data.fileName;
-        } catch (err) {
-            setMessage("Error uploading file data.");
-        }
-    };
 
     return (
         <form className="form--container form global--container" onSubmit={onSubmit}>
@@ -95,7 +70,7 @@ export const FormAddTally = () => {
             <label className="form__label label--added--file" htmlFor="document_title">Dodaj plik</label>
             <label className="form__label label--added" htmlFor="document_title">
                 <img className="icon__upload" src="/img/wgrywanie.png" alt="wgrywanie"/>
-                <input className="form__input input--added"  onChange={handleFileChange} type="file" id="document_title" name="document_title" />
+                <input className="form__input input--added"  onChange={(e) => handleFileChange(e, setFile, setFileName)} type="file" id="document_title" name="document_title" />
                 <p>{message}</p>
             </label>
             <label className="form__label" htmlFor="documentURL"> Adres URL dokumentu </label>

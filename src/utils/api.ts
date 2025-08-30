@@ -2,7 +2,6 @@ import axios from "axios";
 import { TallyType } from "../types/tally";
 
 export const api = axios.create({
-    // baseURL: process.env.BASE_URL,
     baseURL: process.env.REACT_APP_SERVER_URL,
     withCredentials: true,
     headers: { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/json' }
