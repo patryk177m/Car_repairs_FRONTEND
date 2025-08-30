@@ -29,7 +29,12 @@ export const FormAddTally = () => {
     const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
        e.preventDefault();
         if (!tally) return;
-        await uploadFile(file, setMessage).then((data: string) => createTally({...tally, documentURL: data }));
+        await uploadFile(file, setMessage).then((data: string) => createTally({...tally, documentURL: data })).finally(() => {
+                setFileName("");
+                setFile(null);
+                tally.documentURL = "";
+            }
+        );
     }
 
     return (

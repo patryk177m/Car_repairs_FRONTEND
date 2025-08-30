@@ -48,10 +48,10 @@ export const Tally: React.FC<Props> = ({tally}: Props) => {
                 <td>{tally?.mileage_before_service}</td>
                 <td>{tally?.warranty_by_mileage}</td>
                 <td>
-                    {tally.documentURL &&
+                    {tally.documentURL ?
                         (<FileDownload
                             tally={tally}
-                        />)
+                        />) : <img className="options__icon" src="/img/upload.svg" alt="edit icon"/>
                     }
                 </td>
                 <td colSpan={2}><Link className="tally__link" to="">{tally?.comments}</Link></td>
