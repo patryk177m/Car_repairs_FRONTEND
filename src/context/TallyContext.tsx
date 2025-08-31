@@ -26,38 +26,35 @@ type TallyContextType = {
     handleChange: <T extends object>(e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>, fn: Dispatch<SetStateAction<T>>) => void;
     comment: string;
     setComment: Dispatch<SetStateAction<string>>;
-    addTally: Omit<TallyType, "id">;
-    setAddTally: Dispatch<SetStateAction<Omit<TallyType, "id">>>;
-    handleAddOnSubmit: (e: React.FormEvent<HTMLFormElement>, navigate:  NavigateFunction, fnTally: Function, fn: Dispatch<SetStateAction<Omit<TallyType, "id">>>) => void;
+    handleAddOnSubmit: <T extends object>(
+        e: FormEvent<HTMLFormElement>,
+        addData: T | null,
+        fnSubmit: (data: T) => Promise<void>,
+        navigate: NavigateFunction,
+        resetTemplate: T,
+        fn: Dispatch<SetStateAction<T>>
+    ) => void;
+    handleUpdateOnSubmit: <T extends object>(
+        e: FormEvent<HTMLFormElement>,
+        id: string,
+        updateData: T | null,
+        fnSubmit: (id: string, data: T) => Promise<void>,
+        navigate: NavigateFunction,
+        resetTemplate: T,
+        fn: Dispatch<SetStateAction<T>>
+    ) => void;
 }
 
 const TallyContext = createContext<TallyContextType | undefined>(undefined);
 
 // Provider
-export const TallyProvider = ({ children }: { children: ReactNode }) => {
-    const now = new Date();
+export const TallyProvider = ({children}: { children: ReactNode }) => {
 
     const [tallies, setTallies] = useState<TallyType[]>([]);
     const [file, setFile] = useState<File | null>(null);
     const [fileName, setFileName] = useState<string>("");
     const [message, setMessage] = useState<string>("");
-    const [comment ,setComment] = useState<string>("");
-    const [addTally, setAddTally] = useState<Omit<TallyType, "id">>({
-        replaced: "",
-        date_replaced: now,
-        part_brand: "",
-        cost: 0,
-        service: "",
-        mechanic: "",
-        guarantee: false,
-        guarantee_time: now,
-        comments: "",
-        current_mileage: 0,
-        mileage_before_service: 0,
-        warranty_by_mileage: 0,
-        document_title: "",
-        documentURL: "",
-    });
+    const [comment, setComment] = useState<string>("");
 
     const fetchTallies = async () => {
         try {
@@ -69,61 +66,75 @@ export const TallyProvider = ({ children }: { children: ReactNode }) => {
         }
     }
 
-    const handleChange = <T extends object> (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>, fn: Dispatch<SetStateAction<T>>) => {
+    const handleChange = <T extends object>(e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>, fn: Dispatch<SetStateAction<T>>) => {
         if (!fn) return;
         changeValue<T>(e, fn);
     }
 
-    const handleAddOnSubmit = async (e: FormEvent<HTMLFormElement>, navigate:  NavigateFunction, fnTally: Function, fn: Dispatch<SetStateAction<Omit<TallyType, "id">>>) => {
+    const handleAddOnSubmit = async <T extends object>(
+        e: FormEvent<HTMLFormElement>,
+        addData: T | null,
+        fnSubmit: (data: T) => Promise<void>,
+        navigate: NavigateFunction,
+        resetTemplate: T,
+        fn: Dispatch<SetStateAction<T>>
+    ) => {
         e.preventDefault();
-        if (!addTally) return;
-        await uploadFile(file, setMessage)
-            .then((data: string) => {
-                fnTally({...addTally, documentURL: data});
-                navigate("/list")
-            })
-            .finally(() => {
-                    setFileName("");
-                    setFile(null);
-                    fn({
-                        replaced: "",
-                        date_replaced: now,
-                        part_brand: "",
-                        cost: 0,
-                        service: "",
-                        mechanic: "",
-                        guarantee: false,
-                        guarantee_time: now,
-                        comments: "",
-                        current_mileage: 0,
-                        mileage_before_service: 0,
-                        warranty_by_mileage: 0,
-                        document_title: "",
-                        documentURL: "",
-                    })
-                }
-            );
-    }
+        if (!addData) return;
+
+        try {
+            const uploadedUrl = await uploadFile(file, setMessage);
+            await fnSubmit({ ...addData, documentURL: uploadedUrl });
+            navigate("/list");
+        } finally {
+            setFileName("");
+            setFile(null);
+            fn(resetTemplate);
+        }
+    };
+
+    const handleUpdateOnSubmit = async <T extends object>(
+        e: FormEvent<HTMLFormElement>,
+        id: string,
+        updateData: T | null,
+        fnSubmit: (id: string, data: T) => Promise<void>,
+        navigate: NavigateFunction,
+        resetTemplate: T,
+        fn: Dispatch<SetStateAction<T>>
+    ) => {
+        e.preventDefault();
+        if (!updateData || !id) return;
+
+        try {
+            const uploadedUrl = await uploadFile(file, setMessage);
+            await fnSubmit(id, { ...updateData, documentURL: uploadedUrl });
+            navigate("/list");
+        } finally {
+            setFileName("");
+            setFile(null);
+            fn(resetTemplate);
+        }
+    };
+
 
 
     return (
         <TallyContext.Provider value={
-                {
-                    tallies,
-                    setTallies,
-                    fetchTallies,
-                    file,
-                    setFile,
-                    fileName,
-                    setFileName,
-                    message,
-                    setMessage,
-                    handleChange,
-                    comment,
-                    setComment,
-                    addTally,
-                    setAddTally,
-                    handleAddOnSubmit,
+            {
+                tallies,
+                setTallies,
+                fetchTallies,
+                file,
+                setFile,
+                fileName,
+                setFileName,
+                message,
+                setMessage,
+                handleChange,
+                comment,
+                setComment,
+                handleAddOnSubmit,
+                handleUpdateOnSubmit,
 
             }
         }>
