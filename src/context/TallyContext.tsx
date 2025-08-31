@@ -8,7 +8,7 @@ import React, {
     ReactNode,
     FormEvent
 } from "react";
-import {createTally, getTallies} from "../utils/api";
+import {getTallies} from "../utils/api";
 import {changeValue, uploadFile} from "../utils/utils";
 import {NavigateFunction} from "react-router";
 import {TallyType} from "../types/tally";
@@ -28,7 +28,7 @@ type TallyContextType = {
     setComment: Dispatch<SetStateAction<string>>;
     addTally: Omit<TallyType, "id">;
     setAddTally: Dispatch<SetStateAction<Omit<TallyType, "id">>>;
-    handleAddOnSubmit: (e: React.FormEvent<HTMLFormElement>, navigate:  NavigateFunction) => void;
+    handleAddOnSubmit: (e: React.FormEvent<HTMLFormElement>, navigate:  NavigateFunction, fnTally: Function, fn: Dispatch<SetStateAction<Omit<TallyType, "id">>>) => void;
 }
 
 const TallyContext = createContext<TallyContextType | undefined>(undefined);
@@ -74,18 +74,18 @@ export const TallyProvider = ({ children }: { children: ReactNode }) => {
         changeValue<T>(e, fn);
     }
 
-    const handleAddOnSubmit = async (e: FormEvent<HTMLFormElement>, navigate:  NavigateFunction) => {
+    const handleAddOnSubmit = async (e: FormEvent<HTMLFormElement>, navigate:  NavigateFunction, fnTally: Function, fn: Dispatch<SetStateAction<Omit<TallyType, "id">>>) => {
         e.preventDefault();
         if (!addTally) return;
         await uploadFile(file, setMessage)
             .then((data: string) => {
-                createTally({...addTally, documentURL: data});
+                fnTally({...addTally, documentURL: data});
                 navigate("/list")
             })
             .finally(() => {
                     setFileName("");
                     setFile(null);
-                    setAddTally({
+                    fn({
                         replaced: "",
                         date_replaced: now,
                         part_brand: "",

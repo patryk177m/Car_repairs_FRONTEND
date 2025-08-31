@@ -5,13 +5,14 @@ import "../styles/global.scss";
 import {useTallyContext} from "../context/TallyContext";
 import {handleFileChange} from "../utils/utils";
 import {useNavigate} from "react-router";
+import {createTally} from "../utils/api";
 
 export const FormAddTally = () => {
     const navigate = useNavigate();
     const {addTally, setAddTally, setFile, fileName, setFileName, message, handleChange, handleAddOnSubmit} = useTallyContext();
 
     const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
-        handleAddOnSubmit(e, navigate);
+        handleAddOnSubmit(e, navigate, createTally, setAddTally);
     }
 
     return (
