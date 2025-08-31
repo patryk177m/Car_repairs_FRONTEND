@@ -8,10 +8,10 @@ import React, {
     ReactNode,
     FormEvent
 } from "react";
-import {TallyType} from "../types/tally";
 import {createTally, getTallies} from "../utils/api";
 import {changeValue, uploadFile} from "../utils/utils";
 import {NavigateFunction} from "react-router";
+import {TallyType} from "../types/tally";
 
 type TallyContextType = {
     tallies: TallyType[];
@@ -26,8 +26,8 @@ type TallyContextType = {
     handleChange: <T extends object>(e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>, fn: Dispatch<SetStateAction<T>>) => void;
     comment: string;
     setComment: Dispatch<SetStateAction<string>>;
-    tally: Omit<TallyType, "id">;
-    setTally: Dispatch<SetStateAction<Omit<TallyType, "id">>>;
+    addTally: Omit<TallyType, "id">;
+    setAddTally: Dispatch<SetStateAction<Omit<TallyType, "id">>>;
     handleAddOnSubmit: (e: React.FormEvent<HTMLFormElement>, navigate:  NavigateFunction) => void;
 }
 
@@ -42,7 +42,7 @@ export const TallyProvider = ({ children }: { children: ReactNode }) => {
     const [fileName, setFileName] = useState<string>("");
     const [message, setMessage] = useState<string>("");
     const [comment ,setComment] = useState<string>("");
-    const [tally, setTally] = useState<Omit<TallyType, "id">>({
+    const [addTally, setAddTally] = useState<Omit<TallyType, "id">>({
         replaced: "",
         date_replaced: now,
         part_brand: "",
@@ -76,16 +76,31 @@ export const TallyProvider = ({ children }: { children: ReactNode }) => {
 
     const handleAddOnSubmit = async (e: FormEvent<HTMLFormElement>, navigate:  NavigateFunction) => {
         e.preventDefault();
-        if (!tally) return;
+        if (!addTally) return;
         await uploadFile(file, setMessage)
             .then((data: string) => {
-                createTally({...tally, documentURL: data});
+                createTally({...addTally, documentURL: data});
                 navigate("/list")
             })
             .finally(() => {
                     setFileName("");
                     setFile(null);
-                    tally.documentURL = "";
+                    setAddTally({
+                        replaced: "",
+                        date_replaced: now,
+                        part_brand: "",
+                        cost: 0,
+                        service: "",
+                        mechanic: "",
+                        guarantee: false,
+                        guarantee_time: now,
+                        comments: "",
+                        current_mileage: 0,
+                        mileage_before_service: 0,
+                        warranty_by_mileage: 0,
+                        document_title: "",
+                        documentURL: "",
+                    })
                 }
             );
     }
@@ -106,8 +121,8 @@ export const TallyProvider = ({ children }: { children: ReactNode }) => {
                     handleChange,
                     comment,
                     setComment,
-                    tally,
-                    setTally,
+                    addTally,
+                    setAddTally,
                     handleAddOnSubmit,
 
             }
