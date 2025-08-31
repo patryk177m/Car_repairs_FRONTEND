@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import "../styles/formAddTally.scss";
 import "../styles/global.scss";
 
