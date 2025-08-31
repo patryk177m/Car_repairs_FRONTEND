@@ -1,7 +1,17 @@
-import React, {createContext, useContext, useState, ChangeEvent, Dispatch, SetStateAction, ReactNode} from "react";
+import React, {
+    createContext,
+    useContext,
+    useState,
+    ChangeEvent,
+    Dispatch,
+    SetStateAction,
+    ReactNode,
+    FormEvent
+} from "react";
 import {TallyType} from "../types/tally";
-import {getTallies} from "../utils/api";
-import {changeValue} from "../utils/utils";
+import {createTally, getTallies} from "../utils/api";
+import {changeValue, uploadFile} from "../utils/utils";
+import {NavigateFunction} from "react-router";
 
 type TallyContextType = {
     tallies: TallyType[];
@@ -16,17 +26,38 @@ type TallyContextType = {
     handleChange: <T extends object>(e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>, fn: Dispatch<SetStateAction<T>>) => void;
     comment: string;
     setComment: Dispatch<SetStateAction<string>>;
+    tally: Omit<TallyType, "id">;
+    setTally: Dispatch<SetStateAction<Omit<TallyType, "id">>>;
+    handleAddOnSubmit: (e: React.FormEvent<HTMLFormElement>, navigate:  NavigateFunction) => void;
 }
 
 const TallyContext = createContext<TallyContextType | undefined>(undefined);
 
 // Provider
 export const TallyProvider = ({ children }: { children: ReactNode }) => {
+    const now = new Date();
+
     const [tallies, setTallies] = useState<TallyType[]>([]);
     const [file, setFile] = useState<File | null>(null);
     const [fileName, setFileName] = useState<string>("");
     const [message, setMessage] = useState<string>("");
     const [comment ,setComment] = useState<string>("");
+    const [tally, setTally] = useState<Omit<TallyType, "id">>({
+        replaced: "",
+        date_replaced: now,
+        part_brand: "",
+        cost: 0,
+        service: "",
+        mechanic: "",
+        guarantee: false,
+        guarantee_time: now,
+        comments: "",
+        current_mileage: 0,
+        mileage_before_service: 0,
+        warranty_by_mileage: 0,
+        document_title: "",
+        documentURL: "",
+    });
 
     const fetchTallies = async () => {
         try {
@@ -41,6 +72,22 @@ export const TallyProvider = ({ children }: { children: ReactNode }) => {
     const handleChange = <T extends object> (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>, fn: Dispatch<SetStateAction<T>>) => {
         if (!fn) return;
         changeValue<T>(e, fn);
+    }
+
+    const handleAddOnSubmit = async (e: FormEvent<HTMLFormElement>, navigate:  NavigateFunction) => {
+        e.preventDefault();
+        if (!tally) return;
+        await uploadFile(file, setMessage)
+            .then((data: string) => {
+                createTally({...tally, documentURL: data});
+                navigate("/list")
+            })
+            .finally(() => {
+                    setFileName("");
+                    setFile(null);
+                    tally.documentURL = "";
+                }
+            );
     }
 
 
@@ -59,6 +106,9 @@ export const TallyProvider = ({ children }: { children: ReactNode }) => {
                     handleChange,
                     comment,
                     setComment,
+                    tally,
+                    setTally,
+                    handleAddOnSubmit,
 
             }
         }>

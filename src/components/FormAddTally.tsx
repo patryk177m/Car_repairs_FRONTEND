@@ -1,47 +1,17 @@
-import React, {useState} from "react";
+import React from "react";
 import "../styles/formAddTally.scss";
 import "../styles/global.scss";
-import {createTally} from "../utils/api";
-import {TallyType} from "../types/tally";
+
 import {useTallyContext} from "../context/TallyContext";
-import {handleFileChange, uploadFile} from "../utils/utils";
+import {handleFileChange} from "../utils/utils";
 import {useNavigate} from "react-router";
 
 export const FormAddTally = () => {
-    const now = new Date();
     const navigate = useNavigate();
-    const [tally, setTally] = useState<Omit<TallyType, "id">>({
-        replaced: "",
-        date_replaced: now,
-        part_brand: "",
-        cost: 0,
-        service: "",
-        mechanic: "",
-        guarantee: false,
-        guarantee_time: now,
-        comments: "",
-        current_mileage: 0,
-        mileage_before_service: 0,
-        warranty_by_mileage: 0,
-        document_title: "",
-        documentURL: "",
-    });
-    const {file, setFile, fileName, setFileName, message, setMessage, handleChange} = useTallyContext();
+    const {tally, setTally, setFile, fileName, setFileName, message, handleChange, handleAddOnSubmit} = useTallyContext();
 
     const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
-        e.preventDefault();
-        if (!tally) return;
-        await uploadFile(file, setMessage)
-            .then((data: string) => {
-                createTally({...tally, documentURL: data});
-                navigate("/list")
-            })
-            .finally(() => {
-                    setFileName("");
-                    setFile(null);
-                    tally.documentURL = "";
-                }
-            );
+        handleAddOnSubmit(e, navigate);
     }
 
     return (
