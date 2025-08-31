@@ -5,13 +5,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter, Route, Routes} from "react-router";
 import {Home} from "./pages/Home";
-import { FormAddTally } from "./components/FormAddTally";
+import { FormAddTally } from "./pages/FormAddTally";
 import {TallyListPage} from "./pages/TallyListPage";
 import {NotFound} from "./pages/NotFound";
 import {Header} from "./components/Header";
 import {TallySingleView} from "./pages/TallySingleView";
 import {TallyProvider} from "./context/TallyContext";
-import {FileUpdate} from "./components/TallyUpdate";
+import {FileUpdate} from "./pages/FormTallyUpdate";
 
 
 
