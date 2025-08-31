@@ -1,6 +1,5 @@
 import React from "react";
 import {TallyType} from "../types/tally";
-import {FileDownload} from "./fileDownload";
 import "../styles/tally.scss"
 import {Link, useNavigate} from "react-router";
 import {calcGuarantee, checkGuarantee, convertToDate, fullDate} from "../utils/date";
@@ -8,16 +7,15 @@ import cn from "classnames";
 import {deleteTally} from "../utils/api";
 import {useTallyContext} from "../context/TallyContext";
 import {TallyComment} from "./TallyComment";
+import {FileDownload} from "./FileDownload";
 
 type Props = {
     tally: TallyType;
 }
 
 export const Tally: React.FC<Props> = ({tally}: Props) => {
-    const {tallies, setTallies} = useTallyContext();
-    // const [comment, setComment] = useState<string>("");
-
     const navigate = useNavigate();
+    const {tallies, setTallies} = useTallyContext();
 
     const dateValid = convertToDate(tally!.guarantee_time);
     const mileageValid = calcGuarantee(tally!.mileage_before_service, tally!.current_mileage, tally!.warranty_by_mileage);

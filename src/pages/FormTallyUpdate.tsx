@@ -1,15 +1,14 @@
-import React, {useEffect, useState} from "react";
+import React, {FormEvent, useEffect, useState} from "react";
 import {useTallyContext} from "../context/TallyContext";
 import {getTallyById, updateTally} from "../utils/api";
-import {TallyType} from "../types/tally";
 import {useNavigate, useParams} from "react-router";
-import {handleFileChange, uploadFile} from "../utils/utils";
+import {handleFileChange} from "../utils/utils";
+import {TallyType} from "../types/tally";
 
 export const FileUpdate = () => {
-    const {handleChange, setFile, setFileName, fileName, file, setMessage, message} = useTallyContext();
     const navigate = useNavigate();
+    const { handleChange, setFile, setFileName, fileName, message, handleUpdateOnSubmit} = useTallyContext();
     const now = new Date();
-
     const [selectedTally, setSelectedTally] = useState<TallyType>({
         id: "",
         replaced: "",
@@ -30,21 +29,9 @@ export const FileUpdate = () => {
 
     const {id} = useParams<{ id: string }>()
 
-    const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
-        e.preventDefault();
+    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         if (!id) return;
-        await uploadFile(file, setMessage).then((data: string) => {
-            updateTally(id, {
-                ...selectedTally,
-                documentURL: data
-            });
-             navigate("/list")
-        }).finally(() => {
-            setFile(null);
-            setFileName("");
-            selectedTally.documentURL = "";
-        });
-        ;
+        handleUpdateOnSubmit(e, id, selectedTally, updateTally, navigate, selectedTally, setSelectedTally)
     }
 
     useEffect(() => {
@@ -57,7 +44,7 @@ export const FileUpdate = () => {
 
     return (
         <>
-            {!selectedTally ||
+
                 <form className="form--container form global--container" onSubmit={onSubmit}>
                     <label className="form__label" htmlFor="replaced"> Co wymieniono </label>
                     <input className="form__input" onChange={e => handleChange(e, setSelectedTally)}
@@ -128,7 +115,7 @@ export const FileUpdate = () => {
 
                     <button className="form__button">Zaktualizuj</button>
                 </form>
-            }
+
         </>
     )
 }
