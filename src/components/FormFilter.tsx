@@ -11,7 +11,6 @@ export const FormFilter = () => {
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
-        console.log(search)
         let changed = false;
         for (const [key, value] of params.entries()) {
             if (!value || value === "") {
