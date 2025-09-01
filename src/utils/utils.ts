@@ -70,3 +70,21 @@ export const removeClass = (titleClass: string, removeTitleClass: string) => {
 export const filteredTallies = (tallies: TallyType[], search: string) => {
     return tallies.filter((tally) => tally.replaced.toLowerCase().includes(search.toLowerCase()));
 }
+
+// function add and clear params for URL
+
+export const updateParams = () => {
+    const params = new URLSearchParams(window.location.search);
+    let changed = false;
+    for (const [key, value] of params.entries()) {
+        if (!value || value === "") {
+            params.delete(key);
+            changed = true;
+        }
+    }
+
+    if (!changed) {
+        const newUrl = window.location.pathname + (params.toString() ? `?${params.toString()}` : "");
+        window.history.replaceState({}, "", newUrl);
+    }
+}
