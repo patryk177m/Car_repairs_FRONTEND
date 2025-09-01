@@ -6,7 +6,7 @@ import React, {
     Dispatch,
     SetStateAction,
     ReactNode,
-    FormEvent
+    FormEvent,
 } from "react";
 import {getTallies} from "../utils/api";
 import {changeValue, uploadFile} from "../utils/utils";
@@ -43,6 +43,8 @@ type TallyContextType = {
         resetTemplate: T,
         fn: Dispatch<SetStateAction<T>>
     ) => void;
+    search: string;
+    setSearch: Dispatch<SetStateAction<string>>;
 }
 
 const TallyContext = createContext<TallyContextType | undefined>(undefined);
@@ -55,6 +57,7 @@ export const TallyProvider = ({children}: { children: ReactNode }) => {
     const [fileName, setFileName] = useState<string>("");
     const [message, setMessage] = useState<string>("");
     const [comment, setComment] = useState<string>("");
+    const [search, setSearch] = useState("");
 
     const fetchTallies = async () => {
         try {
@@ -116,8 +119,6 @@ export const TallyProvider = ({children}: { children: ReactNode }) => {
         }
     };
 
-
-
     return (
         <TallyContext.Provider value={
             {
@@ -135,6 +136,8 @@ export const TallyProvider = ({children}: { children: ReactNode }) => {
                 setComment,
                 handleAddOnSubmit,
                 handleUpdateOnSubmit,
+                search,
+                setSearch,
 
             }
         }>

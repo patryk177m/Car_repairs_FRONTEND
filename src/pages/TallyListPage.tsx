@@ -3,9 +3,11 @@ import "../styles/tallyListPage.scss";
 import {Tally} from "../components/Tally";
 import {useTallyContext} from "../context/TallyContext";
 import {ShowComment} from "../components/ShowComment";
+import {FormFilter} from "../components/FormFilter";
+import {filteredTallies} from "../utils/utils";
 
 export const TallyListPage = () => {
-    const {tallies, fetchTallies} = useTallyContext();
+    const {tallies, fetchTallies, search} = useTallyContext();
 
     useEffect(() => {
         fetchTallies();
@@ -14,6 +16,7 @@ export const TallyListPage = () => {
 
     return (
         <>
+            <FormFilter/>
             <table className="global--container table">
                 <thead>
                 <tr>
@@ -34,7 +37,7 @@ export const TallyListPage = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {tallies.length <= 0 || tallies.map((v) => {
+                {filteredTallies(tallies, search).length <= 0 || filteredTallies(tallies, search).map((v) => {
                     return (<Tally
                         key={v.id}
                         tally={v}
