@@ -6,9 +6,9 @@ import React, {
     Dispatch,
     SetStateAction,
     ReactNode,
-    FormEvent
+    FormEvent,
 } from "react";
-import {getTallies} from "../utils/api";
+import {getFilteredTallies, getTallies} from "../utils/api";
 import {changeValue, uploadFile} from "../utils/utils";
 import {NavigateFunction} from "react-router";
 import {TallyType} from "../types/tally";
@@ -43,6 +43,8 @@ type TallyContextType = {
         resetTemplate: T,
         fn: Dispatch<SetStateAction<T>>
     ) => void;
+    search: string;
+    setSearch: Dispatch<SetStateAction<string>>;
 }
 
 const TallyContext = createContext<TallyContextType | undefined>(undefined);
@@ -55,10 +57,11 @@ export const TallyProvider = ({children}: { children: ReactNode }) => {
     const [fileName, setFileName] = useState<string>("");
     const [message, setMessage] = useState<string>("");
     const [comment, setComment] = useState<string>("");
+    const [search, setSearch] = useState("");
 
     const fetchTallies = async () => {
         try {
-            const response = await getTallies();
+            const response = await getFilteredTallies(search);
             setTallies(response);
             return tallies;
         } catch (err) {
@@ -116,8 +119,6 @@ export const TallyProvider = ({children}: { children: ReactNode }) => {
         }
     };
 
-
-
     return (
         <TallyContext.Provider value={
             {
@@ -135,6 +136,8 @@ export const TallyProvider = ({children}: { children: ReactNode }) => {
                 setComment,
                 handleAddOnSubmit,
                 handleUpdateOnSubmit,
+                search,
+                setSearch,
 
             }
         }>

@@ -14,7 +14,7 @@ export const FilePreview: React.FC<Props> = ({ tally }) => {
         const fileName = tally.documentURL; // 👈 nazwa pliku do pobrania
 
         try {
-            const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}public/uploads/${tally.documentURL}`, {
+            const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/uploads/${tally.documentURL}`, {
                 responseType: "blob", // ⬅️ bardzo ważne – pobiera dane binarne
             });
             console.log(res)

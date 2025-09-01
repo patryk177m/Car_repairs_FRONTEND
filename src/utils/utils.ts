@@ -1,5 +1,6 @@
 import {ChangeEvent, Dispatch, SetStateAction} from "react";
 import axios from "axios";
+import {TallyType} from "../types/tally";
 
 export const changeValue = <T extends object> (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
@@ -62,4 +63,10 @@ export const addClass = (titleClass: string, addTitleClass: string) => {
 
 export const removeClass = (titleClass: string, removeTitleClass: string) => {
     return  document.querySelector(`.${titleClass}`)?.classList.remove(removeTitleClass);
+}
+
+//filter by searchQury
+
+export const filteredTallies = (tallies: TallyType[], search: string) => {
+    return tallies.filter((tally) => tally.replaced.toLowerCase().includes(search.toLowerCase()));
 }
