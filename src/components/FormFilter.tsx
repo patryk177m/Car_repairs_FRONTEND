@@ -11,18 +11,24 @@ export const FormFilter = () => {
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
-        setSearchParams({searchQuery: search });
-        if (!search) setSearchParams({})
-
+        console.log(search)
+        let changed = false;
         for (const [key, value] of params.entries()) {
-            if (!value) {
+            if (!value || value === "") {
                 params.delete(key);
+                changed = true;
             }
         }
 
-        if (!search) {
-            const newUrl = window.location.pathname + (searchParams ? `?${searchParams}` : "");
+        if (!changed) {
+            const newUrl = window.location.pathname + (params.toString() ? `?${params.toString()}` : "");
             window.history.replaceState({}, "", newUrl);
+        }
+
+        if (search && search.trim() !== "") {
+            setSearchParams({ searchQuery: search });
+        } else {
+            setSearchParams({});
         }
 
     }, [search, searchParams])
