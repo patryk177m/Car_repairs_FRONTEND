@@ -37,7 +37,7 @@ export const TallyListPage = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {filteredTallies(tallies, search).length <= 0 || filteredTallies(tallies, search).map((v) => {
+                {filteredTallies(tallies, search).map((v) => {
                     return (<Tally
                         key={v.id}
                         tally={v}
