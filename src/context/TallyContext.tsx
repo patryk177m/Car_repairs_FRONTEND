@@ -8,7 +8,7 @@ import React, {
     ReactNode,
     FormEvent,
 } from "react";
-import {getTallies} from "../utils/api";
+import {getFilteredTallies, getTallies} from "../utils/api";
 import {changeValue, uploadFile} from "../utils/utils";
 import {NavigateFunction} from "react-router";
 import {TallyType} from "../types/tally";
@@ -61,7 +61,7 @@ export const TallyProvider = ({children}: { children: ReactNode }) => {
 
     const fetchTallies = async () => {
         try {
-            const response = await getTallies();
+            const response = await getFilteredTallies(search);
             setTallies(response);
             return tallies;
         } catch (err) {

@@ -33,3 +33,9 @@ export const updateTally = async (id: string, tally: Omit<TallyType, "id">) => {
     const response = await api.put(`/update/${id}`, tally);
     return response.data;
 }
+
+export const getFilteredTallies = async (searchQuery: string) => {
+    const params = new URLSearchParams({ searchQuery: searchQuery});
+    const response = await api.get<TallyType[]>(`/list/search?${params.toString()}`);
+    return response.data as TallyType[];
+}

@@ -4,7 +4,6 @@ import {Tally} from "../components/Tally";
 import {useTallyContext} from "../context/TallyContext";
 import {ShowComment} from "../components/ShowComment";
 import {FormFilter} from "../components/FormFilter";
-import {filteredTallies} from "../utils/utils";
 
 export const TallyListPage = () => {
     const {tallies, fetchTallies, search} = useTallyContext();
@@ -12,7 +11,7 @@ export const TallyListPage = () => {
     useEffect(() => {
         fetchTallies();
 
-    }, []);
+    }, [search]);
 
     return (
         <>
@@ -32,12 +31,12 @@ export const TallyListPage = () => {
                     <th>Przebieg przed naprawą</th>
                     <th>Gwarancja wg przebiegu</th>
                     <th>Dokument</th>
-                    <th>Uwagi</th>
+                    <th className="comment--field">Uwagi</th>
                     <th>Opcje</th>
                 </tr>
                 </thead>
                 <tbody>
-                {filteredTallies(tallies, search).map((v) => {
+                {tallies.map((v) => {
                     return (<Tally
                         key={v.id}
                         tally={v}
