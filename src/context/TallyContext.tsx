@@ -8,7 +8,7 @@ import React, {
     ReactNode,
     FormEvent,
 } from "react";
-import {getFilteredTallies, getTallies} from "../utils/api";
+import {getFilteredTallies} from "../utils/api";
 import {changeValue, uploadFile} from "../utils/utils";
 import {NavigateFunction} from "react-router";
 import {TallyType} from "../types/tally";
