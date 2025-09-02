@@ -1,8 +1,15 @@
+.main {
+  height: calc(100vh - 50px);
+}
+
 .form {
+  height: auto;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 
   &--container {
+    height: 100%;
     width: 600px;
     display: flex;
     align-items: center;
@@ -40,8 +47,6 @@
 }
 
 .label--added {
-  //display: flex;
-  //flex-direction: column;
   background-color: rgb(167, 177, 177);
   height: 12px;
   color: white;
@@ -50,11 +55,6 @@
   display: flex;
   align-items: center;
   justify-content: start;
-
-  //&--file {
-  //  display: flex;
-  //  justify-content: space-between;
-  //}
 
   &:hover {
     background-color: rgb(209, 218, 218);
