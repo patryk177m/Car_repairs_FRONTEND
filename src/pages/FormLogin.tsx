@@ -22,7 +22,6 @@ export const FormLogin = () => {
                 console.log(res.token)
                 if (res.token) {
                     localStorage.setItem("token", res.token); // zapisz token
-                    alert("Zalogowano pomyślnie ✅");
                     navigate("/list");
                 }
             });
