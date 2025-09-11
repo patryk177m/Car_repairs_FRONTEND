@@ -101,7 +101,6 @@ export const getCurrentUser = () => {
     const token = localStorage.getItem("token");
     if (!token) return null;
     try {
-        console.log(jwtDecode<TokenPayload>(token))
         return jwtDecode<TokenPayload>(token);
     } catch {
         return null;
