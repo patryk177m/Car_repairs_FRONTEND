@@ -1,6 +1,7 @@
 import {ChangeEvent, Dispatch, SetStateAction} from "react";
 import axios from "axios";
 import {TallyType} from "../types/tally";
+import {jwtDecode} from "jwt-decode";
 
 export const changeValue = <T extends object> (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
@@ -88,3 +89,21 @@ export const updateParams = () => {
         window.history.replaceState({}, "", newUrl);
     }
 }
+
+// do pobrania usera z jwt
+
+type TokenPayload = {
+    id: string;
+    email: string;
+};
+
+export const getCurrentUser = () => {
+    const token = localStorage.getItem("token");
+    if (!token) return null;
+    try {
+        console.log(jwtDecode<TokenPayload>(token))
+        return jwtDecode<TokenPayload>(token);
+    } catch {
+        return null;
+    }
+};

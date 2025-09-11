@@ -45,6 +45,8 @@ type TallyContextType = {
     ) => void;
     search: string;
     setSearch: Dispatch<SetStateAction<string>>;
+    localToken: string | null;
+    setLocalToken: Dispatch<SetStateAction<string | null>>;
 }
 
 const TallyContext = createContext<TallyContextType | undefined>(undefined);
@@ -58,6 +60,7 @@ export const TallyProvider = ({children}: { children: ReactNode }) => {
     const [message, setMessage] = useState<string>("");
     const [comment, setComment] = useState<string>("");
     const [search, setSearch] = useState("");
+    const [localToken, setLocalToken] = useState<string | null>(null);
 
     const fetchTallies = async () => {
         try {
@@ -138,6 +141,8 @@ export const TallyProvider = ({children}: { children: ReactNode }) => {
                 handleUpdateOnSubmit,
                 search,
                 setSearch,
+                localToken,
+                setLocalToken,
 
             }
         }>

@@ -1,11 +1,19 @@
 import axios from "axios";
-import { TallyType } from "../types/tally";
+import {TallyType} from "../types/tally";
 
 export const api = axios.create({
     baseURL: process.env.REACT_APP_SERVER_URL,
     withCredentials: true,
-    headers: { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/json' }
+    headers: {'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/json'}
 })
+
+api.interceptors.request.use((config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
 
 export const getTallies = async () => {
     const response = await api.get<TallyType[]>("/list");
@@ -35,7 +43,19 @@ export const updateTally = async (id: string, tally: Omit<TallyType, "id">) => {
 }
 
 export const getFilteredTallies = async (searchQuery: string) => {
-    const params = new URLSearchParams({ searchQuery: searchQuery});
+    const params = new URLSearchParams({searchQuery: searchQuery});
     const response = await api.get<TallyType[]>(`/list/search?${params.toString()}`);
     return response.data as TallyType[];
+}
+
+// auth
+
+export const login = async (email: string, password: string) => {
+    if (!email || !password) return;
+
+    return await api.post("/login", {
+        email,
+        password,
+    })
+        .then((response) => response.data);
 }
