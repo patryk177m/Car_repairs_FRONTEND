@@ -25,6 +25,7 @@ export const FileUpdate = () => {
         warranty_by_mileage: 0,
         document_title: "",
         documentURL: "",
+        userId: "",
     });
 
     const {id} = useParams<{ id: string }>()

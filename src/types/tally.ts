@@ -14,4 +14,5 @@ export type TallyType = {
     warranty_by_mileage: number,
     document_title: string,
     documentURL: string,
+    userId: string,
 }

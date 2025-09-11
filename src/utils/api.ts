@@ -27,7 +27,8 @@ export const getTallyById = async (id: string) => {
 }
 
 export const createTally = async (tally: Omit<TallyType, "id">) => {
-    return await api.post("/add", tally).then((response) => response.data)
+    return await api.post("/add", tally)
+        .then((response) => response.data)
         .catch((error) => console.log(error));
 }
 
