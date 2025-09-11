@@ -2,13 +2,16 @@ import React, {FormEvent, useEffect, useState} from "react";
 import {useTallyContext} from "../context/TallyContext";
 import {getTallyById, updateTally} from "../utils/api";
 import {useNavigate, useParams} from "react-router";
-import {handleFileChange} from "../utils/utils";
+import {getCurrentUser, handleFileChange} from "../utils/utils";
 import {TallyType} from "../types/tally";
 
 export const FileUpdate = () => {
     const navigate = useNavigate();
     const { handleChange, setFile, setFileName, fileName, message, handleUpdateOnSubmit} = useTallyContext();
     const now = new Date();
+
+    const user = getCurrentUser()
+
     const [selectedTally, setSelectedTally] = useState<TallyType>({
         id: "",
         replaced: "",
@@ -25,7 +28,7 @@ export const FileUpdate = () => {
         warranty_by_mileage: 0,
         document_title: "",
         documentURL: "",
-        userId: "",
+        userId: user!.id,
     });
 
     const {id} = useParams<{ id: string }>()
