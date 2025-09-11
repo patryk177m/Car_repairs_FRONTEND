@@ -8,7 +8,7 @@ import {useNavigate} from "react-router";
 
 export const FormLogin = () => {
     const navigate = useNavigate();
-    const {handleChange} = useTallyContext()
+    const {handleChange, setLocalToken} = useTallyContext()
     const [user, setUser] = useState<Omit<User, "id">>({
         email: "",
         password: "",
@@ -19,9 +19,9 @@ export const FormLogin = () => {
         e.preventDefault();
         return await login(userEmail, userPassword)
             .then(async (res) => {
-                console.log(res.token)
                 if (res.token) {
                     localStorage.setItem("token", res.token); // zapisz token
+                    setLocalToken(res.token);
                     navigate("/list");
                 }
             });

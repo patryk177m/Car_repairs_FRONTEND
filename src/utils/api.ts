@@ -60,3 +60,10 @@ export const login = async (email: string, password: string) => {
     })
         .then((response) => response.data);
 }
+
+export const logout = async () => {
+    return await api
+        .get('/logout')
+        .then((res) => res.data.status)
+        .catch(() => 'Error logging out! Try again.')
+}

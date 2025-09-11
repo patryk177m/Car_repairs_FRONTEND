@@ -8,7 +8,7 @@ import React, {
     ReactNode,
     FormEvent,
 } from "react";
-import {getFilteredTallies} from "../utils/api";
+import {getFilteredTallies, logout} from "../utils/api";
 import {changeValue, uploadFile} from "../utils/utils";
 import {NavigateFunction} from "react-router";
 import {TallyType} from "../types/tally";
@@ -47,13 +47,13 @@ type TallyContextType = {
     setSearch: Dispatch<SetStateAction<string>>;
     localToken: string | null;
     setLocalToken: Dispatch<SetStateAction<string | null>>;
+    handleLogout: (e: React.MouseEvent<HTMLAnchorElement>, navigate: NavigateFunction) => void;
 }
 
 const TallyContext = createContext<TallyContextType | undefined>(undefined);
 
 // Provider
 export const TallyProvider = ({children}: { children: ReactNode }) => {
-
     const [tallies, setTallies] = useState<TallyType[]>([]);
     const [file, setFile] = useState<File | null>(null);
     const [fileName, setFileName] = useState<string>("");
@@ -122,6 +122,16 @@ export const TallyProvider = ({children}: { children: ReactNode }) => {
         }
     };
 
+    const handleLogout = async (e: React.MouseEvent<HTMLAnchorElement>, navigate: NavigateFunction) => {
+        e.preventDefault()
+        await logout().then(() => {
+            localStorage.removeItem('token')
+            setLocalToken(localStorage.getItem('token'))
+            navigate("/login");
+        })
+    }
+
+
     return (
         <TallyContext.Provider value={
             {
@@ -143,6 +153,7 @@ export const TallyProvider = ({children}: { children: ReactNode }) => {
                 setSearch,
                 localToken,
                 setLocalToken,
+                handleLogout,
 
             }
         }>
