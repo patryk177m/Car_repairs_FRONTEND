@@ -22,7 +22,7 @@ export const FormFilter = () => {
 
     return (
         <form onSubmit={(e) => e.preventDefault()} className="global--container">
-            <input onChange={(e) => setSearch(e.target.value)} className="search__input search" type="text" placeholder="Search" name="search" />
+            <input onChange={(e) => setSearch(e.target.value)} className="search__input search" type="text" placeholder="Wyszukaj" name="search" />
         </form>
     )
 }
