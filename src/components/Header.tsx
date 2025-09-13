@@ -1,11 +1,15 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "../styles/header.scss";
 import {Link, useNavigate} from "react-router";
 import {useTallyContext} from "../context/TallyContext";
 
 export const Header: React.FC = () => {
     const navigate = useNavigate();
-    const { localToken, handleLogout } = useTallyContext()
+    const { localToken, setLocalToken, handleLogout } = useTallyContext()
+
+    useEffect(() => {
+        setLocalToken(localStorage.getItem("token"));
+    }, [localToken]);
 
     return (
         <nav className="nav ">
