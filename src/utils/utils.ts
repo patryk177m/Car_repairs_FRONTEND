@@ -1,6 +1,7 @@
 import {ChangeEvent, Dispatch, SetStateAction} from "react";
 import axios from "axios";
 import {TallyType} from "../types/tally";
+import {jwtDecode} from "jwt-decode";
 
 export const changeValue = <T extends object> (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
@@ -65,8 +66,43 @@ export const removeClass = (titleClass: string, removeTitleClass: string) => {
     return  document.querySelector(`.${titleClass}`)?.classList.remove(removeTitleClass);
 }
 
-//filter by searchQury
+//filter by searchQuery
 
 export const filteredTallies = (tallies: TallyType[], search: string) => {
     return tallies.filter((tally) => tally.replaced.toLowerCase().includes(search.toLowerCase()));
 }
+
+// function add and clear params for URL
+
+export const updateParams = () => {
+    const params = new URLSearchParams(window.location.search);
+    let changed = false;
+    for (const [key, value] of params.entries()) {
+        if (!value || value === "") {
+            params.delete(key);
+            changed = true;
+        }
+    }
+
+    if (!changed) {
+        const newUrl = window.location.pathname + (params.toString() ? `?${params.toString()}` : "");
+        window.history.replaceState({}, "", newUrl);
+    }
+}
+
+// do pobrania usera z jwt
+
+type TokenPayload = {
+    id: string;
+    email: string;
+};
+
+export const getCurrentUser = () => {
+    const token = localStorage.getItem("token");
+    if (!token) return null;
+    try {
+        return jwtDecode<TokenPayload>(token);
+    } catch {
+        return null;
+    }
+};

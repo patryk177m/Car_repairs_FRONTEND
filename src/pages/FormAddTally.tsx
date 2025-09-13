@@ -3,7 +3,7 @@ import "../styles/formAddTally.scss";
 import "../styles/global.scss";
 
 import {useTallyContext} from "../context/TallyContext";
-import {handleFileChange} from "../utils/utils";
+import {getCurrentUser, handleFileChange} from "../utils/utils";
 import {useNavigate} from "react-router";
 import {createTally} from "../utils/api";
 import {TallyType} from "../types/tally";
@@ -13,6 +13,9 @@ export const FormAddTally = () => {
     const navigate = useNavigate();
     const {setFile, fileName, setFileName, message, handleChange, handleAddOnSubmit} = useTallyContext();
     const now = new Date();
+
+    const user = getCurrentUser();
+
     const [addTally, setAddTally] = useState<Omit<TallyType, "id">>({
         replaced: "",
         date_replaced: now,
@@ -28,6 +31,7 @@ export const FormAddTally = () => {
         warranty_by_mileage: 0,
         document_title: "",
         documentURL: "",
+        userId: user!.id,
     });
 
     const onSubmit = async (e: FormEvent<HTMLFormElement>) => {

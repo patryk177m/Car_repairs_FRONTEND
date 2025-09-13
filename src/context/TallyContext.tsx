@@ -8,7 +8,7 @@ import React, {
     ReactNode,
     FormEvent,
 } from "react";
-import {getFilteredTallies, getTallies} from "../utils/api";
+import {getFilteredTallies, logout} from "../utils/api";
 import {changeValue, uploadFile} from "../utils/utils";
 import {NavigateFunction} from "react-router";
 import {TallyType} from "../types/tally";
@@ -16,7 +16,7 @@ import {TallyType} from "../types/tally";
 type TallyContextType = {
     tallies: TallyType[];
     setTallies: (allies: TallyType[]) => void;
-    fetchTallies: () => Promise<TallyType[] | undefined>;
+    fetchTallies: () => void;
     file: File | null;
     setFile: Dispatch<SetStateAction<File | null>>;
     fileName: string;
@@ -45,28 +45,30 @@ type TallyContextType = {
     ) => void;
     search: string;
     setSearch: Dispatch<SetStateAction<string>>;
+    localToken: string | null;
+    setLocalToken: Dispatch<SetStateAction<string | null>>;
+    handleLogout: (e: React.MouseEvent<HTMLAnchorElement>, navigate: NavigateFunction) => void;
+    error: string;
+    setError: Dispatch<SetStateAction<string>>;
 }
 
 const TallyContext = createContext<TallyContextType | undefined>(undefined);
 
 // Provider
 export const TallyProvider = ({children}: { children: ReactNode }) => {
-
     const [tallies, setTallies] = useState<TallyType[]>([]);
     const [file, setFile] = useState<File | null>(null);
     const [fileName, setFileName] = useState<string>("");
     const [message, setMessage] = useState<string>("");
     const [comment, setComment] = useState<string>("");
     const [search, setSearch] = useState("");
+    const [localToken, setLocalToken] = useState<string | null>(null);
+    const [error, setError] = useState<string>("");
 
     const fetchTallies = async () => {
-        try {
-            const response = await getFilteredTallies(search);
-            setTallies(response);
-            return tallies;
-        } catch (err) {
-            console.log(err);
-        }
+        return await getFilteredTallies(search)
+            .then((response) => setTallies(response))
+            .catch(() => "Unable to fetch tallies");
     }
 
     const handleChange = <T extends object>(e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>, fn: Dispatch<SetStateAction<T>>) => {
@@ -87,7 +89,7 @@ export const TallyProvider = ({children}: { children: ReactNode }) => {
 
         try {
             const uploadedUrl = await uploadFile(file, setMessage);
-            await fnSubmit({ ...addData, documentURL: uploadedUrl });
+            await fnSubmit({...addData, documentURL: uploadedUrl});
             navigate("/list");
         } finally {
             setFileName("");
@@ -110,7 +112,7 @@ export const TallyProvider = ({children}: { children: ReactNode }) => {
 
         try {
             const uploadedUrl = await uploadFile(file, setMessage);
-            await fnSubmit(id, { ...updateData, documentURL: uploadedUrl });
+            await fnSubmit(id, {...updateData, documentURL: uploadedUrl});
             navigate("/list");
         } finally {
             setFileName("");
@@ -118,6 +120,16 @@ export const TallyProvider = ({children}: { children: ReactNode }) => {
             fn(resetTemplate);
         }
     };
+
+    const handleLogout = async (e: React.MouseEvent<HTMLAnchorElement>, navigate: NavigateFunction) => {
+        e.preventDefault()
+        await logout().then(() => {
+            localStorage.removeItem('token')
+            setLocalToken(localStorage.getItem('token'))
+            navigate("/login");
+        })
+    }
+
 
     return (
         <TallyContext.Provider value={
@@ -138,6 +150,11 @@ export const TallyProvider = ({children}: { children: ReactNode }) => {
                 handleUpdateOnSubmit,
                 search,
                 setSearch,
+                localToken,
+                setLocalToken,
+                handleLogout,
+                error,
+                setError,
 
             }
         }>

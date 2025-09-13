@@ -12,6 +12,8 @@ import {Header} from "./components/Header";
 import {TallySingleView} from "./pages/TallySingleView";
 import {TallyProvider} from "./context/TallyContext";
 import {FileUpdate} from "./pages/FormTallyUpdate";
+import {FormLogin} from "./pages/FormLogin";
+import {FormRegister} from "./pages/FormRegister";
 
 
 
@@ -30,6 +32,8 @@ root.render(
                   <Route path="/list" element={<TallyListPage />}/>
                   <Route path="/list/:id" element={<TallySingleView />}/>
                   <Route path="/update/:id" element={<FileUpdate />}/>
+                  <Route path="/register" element={<FormRegister/>}/>
+                  <Route path="/login" element={<FormLogin />}/>
                   {/* obsługa nieistniejących ścieżek */}
                   <Route path="*" element={< NotFound />} />
               </Routes>
