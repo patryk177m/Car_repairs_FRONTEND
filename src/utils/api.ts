@@ -1,5 +1,6 @@
 import axios from "axios";
 import {TallyType} from "../types/tally";
+import {Dispatch, SetStateAction} from "react";
 
 export const api = axios.create({
     baseURL: process.env.REACT_APP_SERVER_URL,
@@ -14,6 +15,16 @@ api.interceptors.request.use((config) => {
     }
     return config;
 });
+
+// api.interceptors.response.use(
+//     (res) => res,
+//     (err) => {
+//         if (err.response?.status === 401) {
+//             console.warn("⚠️ Unauthorized");
+//         }
+//         return Promise.reject(err);
+//     }
+// );
 
 export const getTallies = async () => {
     const response = await api.get<TallyType[]>("/list");
@@ -51,14 +62,25 @@ export const getFilteredTallies = async (searchQuery: string) => {
 
 // auth
 
-export const login = async (email: string, password: string) => {
+export const login = async (email: string, password: string, setError :Dispatch<SetStateAction<string>>) => {
     if (!email || !password) return;
 
     return await api.post("/login", {
         email,
         password,
     })
-        .then((response) => response.data);
+        .then((response) => response.data)
+        .catch((err) => {
+            if (axios.isAxiosError(err)) {
+                if (err.response?.status === 401) {
+                    setError("❌ Nieprawidłowy email lub hasło");
+                } else {
+                    setError("⚠️ Wystąpił błąd serwera");
+                }
+            } else {
+                setError("⚠️ Nieznany błąd");
+            }
+        });
 }
 
 export const logout = async () => {

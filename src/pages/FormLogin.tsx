@@ -8,7 +8,7 @@ import {useNavigate} from "react-router";
 
 export const FormLogin = () => {
     const navigate = useNavigate();
-    const {handleChange, setLocalToken} = useTallyContext()
+    const {handleChange, setLocalToken, error, setError} = useTallyContext()
     const [user, setUser] = useState<Omit<User, "id">>({
         email: "",
         password: "",
@@ -17,20 +17,21 @@ export const FormLogin = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, userEmail: string, userPassword: string) => {
         e.preventDefault();
-        return await login(userEmail, userPassword)
+        return await login(userEmail, userPassword, setError)
             .then(async (res) => {
                 if (res.token) {
                     localStorage.setItem("token", res.token); // zapisz token
                     setLocalToken(res.token);
                     navigate("/list");
                 }
-            });
+            }).catch(() => error)
     }
 
     return (
         <main className="main">
             <form onSubmit={(e) => handleSubmit(e, user.email, user.password)}
                   className="form--container form global--container">
+                {error && (<h3 className="global--container">{error}</h3>)}
                 <label className="form__label" htmlFor="email">Email Address</label>
                 <input onChange={(e) => handleChange(e, setUser)} value={user.email} className="form__input" id="email"
                        type="email" name="email" required/>

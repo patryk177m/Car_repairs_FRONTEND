@@ -66,7 +66,7 @@ export const removeClass = (titleClass: string, removeTitleClass: string) => {
     return  document.querySelector(`.${titleClass}`)?.classList.remove(removeTitleClass);
 }
 
-//filter by searchQury
+//filter by searchQuery
 
 export const filteredTallies = (tallies: TallyType[], search: string) => {
     return tallies.filter((tally) => tally.replaced.toLowerCase().includes(search.toLowerCase()));
