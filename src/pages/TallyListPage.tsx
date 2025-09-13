@@ -1,9 +1,11 @@
 import React, {useEffect} from "react";
 import "../styles/tallyListPage.scss";
+import "../styles/global.scss"
 import {Tally} from "../components/Tally";
 import {useTallyContext} from "../context/TallyContext";
 import {ShowComment} from "../components/ShowComment";
 import {FormFilter} from "../components/FormFilter";
+import {FormAddCurrentlyMileage} from "../components/FormAddCurrentlyMileage";
 
 export const TallyListPage = () => {
     const {tallies, fetchTallies, search, localToken} = useTallyContext();
@@ -15,10 +17,14 @@ export const TallyListPage = () => {
 
     return (
         <>
-            {!localToken || tallies.length <= 0 ? <h1 className="global--container title">Jeszcze nie posiadasz wpisów do wyświetlenia</h1> :
+            {!localToken || (tallies.length <= 0 && !search) ? <h1 className="global--container title">Jeszcze nie posiadasz wpisów do wyświetlenia</h1> :
                 (
                     <>
-                        <FormFilter/>
+                        <div className="global--container forms--container">
+
+                            <FormFilter/>
+                            <FormAddCurrentlyMileage/>
+                        </div>
                         <table className="global--container table">
                             <thead>
                             <tr>
