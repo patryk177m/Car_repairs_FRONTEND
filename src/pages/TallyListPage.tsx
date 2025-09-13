@@ -15,7 +15,7 @@ export const TallyListPage = () => {
 
     return (
         <>
-            {tallies.length <= 0 ? <h1 className="global--container title">Jeszcze nie posiadasz wpisów do wyświetlenia</h1> :
+            {!localToken || tallies.length <= 0 ? <h1 className="global--container title">Jeszcze nie posiadasz wpisów do wyświetlenia</h1> :
                 (
                     <>
                         <FormFilter/>
