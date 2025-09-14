@@ -1,9 +1,11 @@
 import  React from 'react';
+import "../styles/global.scss"
+import "../styles/home.scss"
 
 export const Home = () => {
     return (
-        <div>
-            <h1>Home - page</h1>
-        </div>
+        <main className="main global--container">
+            <h1 className="main__title">Zestawienie serisowe pojazdu osobowego</h1>
+        </main>
     )
 }
