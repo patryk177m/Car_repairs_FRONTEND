@@ -69,10 +69,10 @@ export const FormAddTally = () => {
                    type="text"
                    id="mechanic" name="mechanic"/>
 
-            <label className="form__label" htmlFor="guarantee"> Czy gwarancja </label>
-            <input className="form__input" onChange={e => handleChange(e, setAddTally)}
-                   value={String(addTally?.guarantee) === "undefined" ? "" : String(addTally?.guarantee)} type="text"
-                   id="guarantee" name="guarantee"/>
+            {/*<label className="form__label" htmlFor="guarantee"> Czy gwarancja </label>*/}
+            {/*<input className="form__input" onChange={e => handleChange(e, setAddTally)}*/}
+            {/*       value={String(addTally?.guarantee) === "undefined" ? "" : String(addTally?.guarantee)} type="text"*/}
+            {/*       id="guarantee" name="guarantee"/>*/}
 
             <label className="form__label" htmlFor="guarantee_time"> Czas do końca gwarancji </label>
             <input className="form__input" onChange={e => handleChange(e, setAddTally)}
