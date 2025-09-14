@@ -19,13 +19,13 @@ export const TallyComment: React.FC<Props> = ({tally}: Props) => {
 
     return (
         <>
-            {tally.comments.length > 30 ?
+            {tally.comments.length > 50 ?
                 (
                     <td onClick={openModal} className={cn("comment--field", {
-                        "comment--bold": tally?.comments.length > 30
+                        "comment--bold": tally?.comments.length > 50
                     })}>
                         {/*<Link className="tally__link" to="">*/}
-                        {shortContent(tally?.comments, 30)}
+                        {shortContent(tally?.comments, 50)}
                         {/*</Link>*/}
                     </td>) : (
                     <td className="comment--field">{tally.comments}</td>
