@@ -40,6 +40,8 @@ export const FormAddTally = () => {
 
     return (
         <form className="form--container form global--container" onSubmit={onSubmit}>
+            <button onClick={(e) => navigate("/list")} className="form__button" type="submit">Powrót</button>
+
             <label className="form__label" htmlFor="replaced"> Co wymieniono </label>
             <input className="form__input" onChange={e => handleChange(e, setAddTally)} value={addTally?.replaced}
                    type="text"
@@ -68,11 +70,6 @@ export const FormAddTally = () => {
             <input className="form__input" onChange={e => handleChange(e, setAddTally)} value={addTally?.mechanic}
                    type="text"
                    id="mechanic" name="mechanic"/>
-
-            {/*<label className="form__label" htmlFor="guarantee"> Czy gwarancja </label>*/}
-            {/*<input className="form__input" onChange={e => handleChange(e, setAddTally)}*/}
-            {/*       value={String(addTally?.guarantee) === "undefined" ? "" : String(addTally?.guarantee)} type="text"*/}
-            {/*       id="guarantee" name="guarantee"/>*/}
 
             <label className="form__label" htmlFor="guarantee_time"> Czas do końca gwarancji </label>
             <input className="form__input" onChange={e => handleChange(e, setAddTally)}
