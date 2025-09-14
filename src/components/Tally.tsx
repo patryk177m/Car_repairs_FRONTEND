@@ -17,7 +17,6 @@ export const Tally: React.FC<Props> = ({tally}: Props) => {
     const navigate = useNavigate();
     const {tallies, setTallies, valueCurrentMileage} = useTallyContext();
 
-    const now = Date.now();
     const dateValid = convertToDate(tally!.guarantee_time);
     const mileageValid = calcGuarantee(tally!.mileage_before_service, valueCurrentMileage, tally!.warranty_by_mileage);
 
