@@ -36,7 +36,6 @@ export const TallyListPage = () => {
                                 <th>Imię mechanika</th>
                                 <th>Gwarancja</th>
                                 <th>Koniec gwarancji</th>
-                                <th>Aktualny przebieg</th>
                                 <th>Przebieg przed naprawą</th>
                                 <th>Gwarancja wg przebiegu</th>
                                 <th>Dokument</th>
