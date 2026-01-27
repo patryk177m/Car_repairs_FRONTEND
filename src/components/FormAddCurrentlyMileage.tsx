@@ -32,22 +32,33 @@ export const FormAddCurrentlyMileage = () => {
     }
 
     useEffect(() => {
+        if(valueCurrentMileage > 0) {
+            setDisable(true);
+            return
+        }
         inputRef.current!.focus();
     }, [valueCurrentMileage]);
 
     return (
         <form onSubmit={handleSubmit} className="form_currently_mileage">
-            <label className="currently_mileage__label" onDoubleClick={handleDoubleClick}>Aktualny przebieg:</label>
+            <label
+                className="currently_mileage__label"
+                onDoubleClick={handleDoubleClick}
+            >
+                Aktualny przebieg:
+            </label>
             {!disable ? (
-                    <input ref={inputRef}
-                           onKeyDown={handleKeyDown}
-                           onBlur={handleBlur}
-                           className="currently_mileage__input currently_mileage__input--green"
-                           type="number"
-                           name="currlentlyMileageDisabled"
-                    />
+                <input ref={inputRef}
+                       onKeyDown={handleKeyDown}
+                       onBlur={handleBlur}
+                       className="currently_mileage__input currently_mileage__input--green"
+                       type="number"
+                       name="currlentlyMileageDisabled"
+                />
                 ) : (
-                <input className="currently_mileage__input currently_mileage__input--red" type="number" disabled />
+                <input className="currently_mileage__input currently_mileage__input--red" type="number"
+                       value={valueCurrentMileage}
+                       disabled />
                 )
             }
         </form>
