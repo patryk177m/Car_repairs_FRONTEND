@@ -1,8 +1,19 @@
 .main {
-  width: 100%;
   &__title {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: "Playwrite US Trad Guides", cursive;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 3.5rem;
+  }
+
+  &__photo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 65%;
   }
 }
