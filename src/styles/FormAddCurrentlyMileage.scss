@@ -1,0 +1,23 @@
+.currently_mileage {
+  &__input {
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    width: 150px;
+    margin: 0;
+
+    &--red{
+      background-color: #a84f4f;
+      color: #000000;
+    }
+
+    &--green{
+      background-color: rgba(111, 189, 147, 0.53);
+    }
+  }
+
+  &__label {
+    padding-right: 10px;
+  }
+}
+
