@@ -20,7 +20,7 @@ export const FormAddCurrentlyMileage = () => {
 
     const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
         setValueCurrentMileage(Number(e.currentTarget.value));
-        if(valueCurrentMileage <= 0) return;
+        if(!valueCurrentMileage && valueCurrentMileage >= 0) return;
         setDisable(true);
     };
 
@@ -32,7 +32,7 @@ export const FormAddCurrentlyMileage = () => {
     }
 
     useEffect(() => {
-        if(valueCurrentMileage > 0) {
+        if(valueCurrentMileage && valueCurrentMileage > 0) {
             setDisable(true);
             return
         }
@@ -51,15 +51,16 @@ export const FormAddCurrentlyMileage = () => {
                 <input ref={inputRef}
                        onKeyDown={handleKeyDown}
                        onBlur={handleBlur}
-                       className="currently_mileage__input currently_mileage__input--green"
+                       className="currently_mileage__input currently_mileage__input--red"
                        type="number"
                        name="currlentlyMileageDisabled"
                 />
                 ) : (
-                <input className="currently_mileage__input currently_mileage__input--red" type="number"
-                       value={valueCurrentMileage}
-                       disabled />
-                )
+                <input
+                    className="currently_mileage__input currently_mileage__input--green"
+                    type="number"
+                    disabled
+                />)
             }
         </form>
     )
