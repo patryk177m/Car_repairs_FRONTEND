@@ -15,10 +15,10 @@ type Props = {
 
 export const Tally: React.FC<Props> = ({tally}: Props) => {
     const navigate = useNavigate();
-    const {tallies, setTallies} = useTallyContext();
+    const {tallies, setTallies, valueCurrentMileage} = useTallyContext();
 
     const dateValid = convertToDate(tally!.guarantee_time);
-    const mileageValid = calcGuarantee(tally!.mileage_before_service, tally!.current_mileage, tally!.warranty_by_mileage);
+    const mileageValid = calcGuarantee(tally!.mileage_before_service, valueCurrentMileage, tally!.warranty_by_mileage);
 
     const deleteTallyById = (id: string) => {
         if (!id) return;
@@ -47,8 +47,9 @@ export const Tally: React.FC<Props> = ({tally}: Props) => {
                 <td className={cn("colortext--red", {
                     'colortext--green': checkGuarantee(dateValid, mileageValid) === "tak",
                 })}>{checkGuarantee(dateValid, mileageValid)}</td>
-                <td>{!tally?.guarantee_time ? "-" : fullDate(tally?.guarantee_time as Date)}</td>
-                <td>{tally?.current_mileage}</td>
+                <td className={cn("colortext--red", {
+                    'colortext--green': new Date(tally.guarantee_time) >= new Date(Date.now()),
+                })}>{!tally?.guarantee_time ? "-" : fullDate(tally?.guarantee_time as Date)}</td>
                 <td>{tally?.mileage_before_service}</td>
                 <td>{tally?.warranty_by_mileage}</td>
                 <td>

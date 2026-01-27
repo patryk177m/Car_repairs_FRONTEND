@@ -16,7 +16,7 @@ table {
 
 .comment {
   &--field {
-    width: 250px;
+    width: 350px;
 
   }
 }
@@ -25,5 +25,33 @@ table {
   display: flex;
   justify-content: center;
   margin: 100px auto;
+}
+
+.forms {
+  &--container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.currently_mileage__input {
+  width: 15%;
+  margin: 0 10px;
+}
+
+.form_currently_mileage {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.form__button--currently_mileage {
+  border: none;
+
+  color: #fff;
+  background-color: #000;
+  font-weight: bold;
 }
 

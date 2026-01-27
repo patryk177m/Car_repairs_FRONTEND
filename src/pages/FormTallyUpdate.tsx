@@ -50,6 +50,8 @@ export const FileUpdate = () => {
         <>
 
                 <form className="form--container form global--container" onSubmit={onSubmit}>
+                    <button onClick={(e) => navigate("/list")} className="form__button" type="submit">Powrót</button>
+
                     <label className="form__label" htmlFor="replaced"> Co wymieniono </label>
                     <input className="form__input" onChange={e => handleChange(e, setSelectedTally)}
                            value={selectedTally.replaced} type="text" id="replaced" name="replaced" required/>
@@ -74,11 +76,6 @@ export const FileUpdate = () => {
                     <label className="form__label" htmlFor="mechanic"> Imię mechanika </label>
                     <input className="form__input" onChange={e => handleChange(e, setSelectedTally)}
                            value={selectedTally.mechanic} type="text" id="mechanic" name="mechanic"/>
-
-                    <label className="form__label" htmlFor="guarantee"> Czy gwarancja </label>
-                    <input className="form__input" onChange={e => handleChange(e, setSelectedTally)}
-                           value={String(selectedTally.guarantee) === "undefined" ? "" : String(selectedTally?.guarantee)}
-                           type="text" id="guarantee" name="guarantee"/>
 
                     <label className="form__label" htmlFor="guarantee_time"> Czas do końca gwarancji </label>
                     <input className="form__input" onChange={e => handleChange(e, setSelectedTally)}

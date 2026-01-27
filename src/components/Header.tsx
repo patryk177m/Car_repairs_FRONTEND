@@ -22,8 +22,8 @@ export const Header: React.FC = () => {
                     </>
                 }
                 {!localToken ?
-                    <Link className="link" to="/login">Login</Link> :
-                    <Link onClick={(e) => handleLogout(e, navigate)} className="link" to="/login">Logout</Link>
+                    <Link className="link" to="/login">Zaloguj</Link> :
+                    <Link onClick={(e) => handleLogout(e, navigate)} className="link" to="/login">Wyloguj</Link>
                 }
             </div>
 

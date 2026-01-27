@@ -50,6 +50,8 @@ type TallyContextType = {
     handleLogout: (e: React.MouseEvent<HTMLAnchorElement>, navigate: NavigateFunction) => void;
     error: string;
     setError: Dispatch<SetStateAction<string>>;
+    valueCurrentMileage: number;
+    setValueCurrentMileage: Dispatch<SetStateAction<number>>;
 }
 
 const TallyContext = createContext<TallyContextType | undefined>(undefined);
@@ -64,6 +66,7 @@ export const TallyProvider = ({children}: { children: ReactNode }) => {
     const [search, setSearch] = useState("");
     const [localToken, setLocalToken] = useState<string | null>(null);
     const [error, setError] = useState<string>("");
+    const [valueCurrentMileage, setValueCurrentMileage] = useState<number>(0)
 
     const fetchTallies = async () => {
         return await getFilteredTallies(search)
@@ -155,6 +158,8 @@ export const TallyProvider = ({children}: { children: ReactNode }) => {
                 handleLogout,
                 error,
                 setError,
+                valueCurrentMileage,
+                setValueCurrentMileage,
 
             }
         }>
