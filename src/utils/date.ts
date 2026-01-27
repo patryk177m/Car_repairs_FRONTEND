@@ -9,7 +9,7 @@ export const fullDate = (time: Date) => {
     if (numberMonth < 10) return `${day}.0${numberMonth}.${year}`;
 
 
-    return `${year}.${numberMonth}.${day}`;
+    return `${day}.${numberMonth}.${year}`;
 };
 
 export const convertToDate = (date: string | Date): boolean => {
