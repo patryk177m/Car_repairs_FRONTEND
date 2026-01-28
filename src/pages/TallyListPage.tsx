@@ -42,14 +42,14 @@ export const TallyListPage = () => {
                         <table className="global--container table">
                             <thead>
                             <tr>
-                                <th onDoubleClick={() => handleSort("replaced")}>Co wymieniono</th>
-                                <th onDoubleClick={() =>handleSort("date_replaced")}>Data wymiany</th>
-                                <th onDoubleClick={() =>handleSort("part_brand")}>Marka części</th>
-                                <th onDoubleClick={() =>handleSort("cost")}>Cena</th>
-                                <th onDoubleClick={() =>handleSort("service")}>Gdzie servisowano</th>
-                                <th onDoubleClick={() =>handleSort("mechanic")}>Imię mechanika</th>
+                                <th className="th--sort" onDoubleClick={() => handleSort("replaced")}>Co wymieniono</th>
+                                <th className="th--sort" onDoubleClick={() =>handleSort("date_replaced")}>Data wymiany</th>
+                                <th className="th--sort" onDoubleClick={() =>handleSort("part_brand")}>Marka części</th>
+                                <th className="th--sort" onDoubleClick={() =>handleSort("cost")}>Cena</th>
+                                <th className="th--sort" onDoubleClick={() =>handleSort("service")}>Gdzie servisowano</th>
+                                <th className="th--sort" onDoubleClick={() =>handleSort("mechanic")}>Imię mechanika</th>
                                 <th>Gwarancja</th>
-                                <th onDoubleClick={() =>handleSort("guarantee_time")}>Koniec gwarancji</th>
+                                <th className="th--sort" onDoubleClick={() =>handleSort("guarantee_time")}>Koniec gwarancji</th>
                                 <th>Przebieg przed naprawą</th>
                                 <th>Gwarancja wg przebiegu</th>
                                 <th>Dokument</th>
