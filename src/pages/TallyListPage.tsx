@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import "../styles/tallyListPage.scss";
 import "../styles/global.scss"
 import {Tally} from "../components/Tally";
@@ -6,9 +6,19 @@ import {useTallyContext} from "../context/TallyContext";
 import {ShowComment} from "../components/ShowComment";
 import {FormFilter} from "../components/FormFilter";
 import {FormAddCurrentlyMileage} from "../components/FormAddCurrentlyMileage";
+import {sortTallies} from "../utils/utils";
 
 export const TallyListPage = () => {
     const {tallies, fetchTallies, search, localToken} = useTallyContext();
+    const [count, setCount] = useState<number>(3);
+
+    const handleSort = () => {
+        if(count === 3) {
+            setCount(count - 2);
+            return;
+        }
+        setCount(count + 1);
+    }
 
     useEffect(() => {
         fetchTallies();
@@ -28,7 +38,7 @@ export const TallyListPage = () => {
                         <table className="global--container table">
                             <thead>
                             <tr>
-                                <th>Co wymieniono</th>
+                                <th onDoubleClick={handleSort}>Co wymieniono</th>
                                 <th>Data wymiany</th>
                                 <th>Marka części</th>
                                 <th>Cena</th>
@@ -44,12 +54,21 @@ export const TallyListPage = () => {
                             </tr>
                             </thead>
                             <tbody>
-                            {tallies.map((v) => {
-                                return (<Tally
-                                    key={v.id}
-                                    tally={v}
-                                />)
-                            })}
+                            {/*{tallies.map((v) => {*/}
+                            {/*    return (<Tally*/}
+                            {/*        key={v.id}*/}
+                            {/*        tally={v}*/}
+                            {/*    />)*/}
+                            {/*})}*/}
+
+                            {
+                                sortTallies(tallies, count, setCount).map(v => {
+                                    return (<Tally
+                                        key={v.id}
+                                        tally={v}
+                                    />)
+                                })
+                            }
                             </tbody>
                         </table>
                     </>
