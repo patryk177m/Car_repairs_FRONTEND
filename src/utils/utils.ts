@@ -111,19 +111,18 @@ export const getCurrentUser = () => {
 
 export const sortTallies = (tallies: TallyType[], count: number, setCount:Dispatch<SetStateAction<number>>) => {
     console.log('count :', count);
-    const list = tallies.map(t => t);
-    let result = list.map((item) => item);
+    let list = [...tallies].map(t => t);
     if(count === 1) {
         console.log('1')
-        result = [...list].sort((a, b) => a.replaced.localeCompare(b.replaced));
+        list = [...list].sort((a, b) => a.replaced.localeCompare(b.replaced));
     }
     if (count === 2) {
         console.log('2')
-        result = [...list].sort((a, b) => a.replaced.localeCompare(b.replaced)).reverse();
+        list = [...list].sort((a, b) => a.replaced.localeCompare(b.replaced)).reverse();
     }
     if (count === 3) {
         console.log('3')
-        result = list.map(tally => tally);
+        list = list.map(tally => tally);
     }
-    return result;
+    return list;
 }
