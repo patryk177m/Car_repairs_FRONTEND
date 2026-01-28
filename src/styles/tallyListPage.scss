@@ -3,6 +3,14 @@ th {
   width: 100px;
 }
 
+.th--sort {
+  &:hover {
+    background-color: #ef7070;
+    cursor: pointer;
+    transition: background-color ease-in-out 0.3s;
+  }
+}
+
 thead {
   display: table-header-group;
   width: 100%;
