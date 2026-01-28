@@ -7,18 +7,22 @@ import {ShowComment} from "../components/ShowComment";
 import {FormFilter} from "../components/FormFilter";
 import {FormAddCurrentlyMileage} from "../components/FormAddCurrentlyMileage";
 import {sortTallies} from "../utils/utils";
+import {TallyType} from "../types/tally";
 
 export const TallyListPage = () => {
     const {tallies, fetchTallies, search, localToken} = useTallyContext();
-    const [count, setCount] = useState<number>(3);
+    const [count, setCount] = useState<1 | 2 | 3>(3);
+    const [sortByField, setSortByField] = useState<keyof TallyType>("replaced");
 
-    const handleSort = () => {
-        if(count === 3) {
-            setCount(count - 2);
-            return;
-        }
-        setCount(count + 1);
-    }
+    const handleSort = <K extends keyof TallyType>(field: K,) => {
+
+        setCount(prev => {
+            if (prev === 3) return 1;
+            return (prev + 1) as 2 | 3;
+        });
+
+        setSortByField(field);
+    };
 
     useEffect(() => {
         fetchTallies();
@@ -38,14 +42,14 @@ export const TallyListPage = () => {
                         <table className="global--container table">
                             <thead>
                             <tr>
-                                <th onDoubleClick={handleSort}>Co wymieniono</th>
-                                <th>Data wymiany</th>
-                                <th>Marka części</th>
-                                <th>Cena</th>
-                                <th>Gdzie servisowano</th>
-                                <th>Imię mechanika</th>
+                                <th onDoubleClick={() => handleSort("replaced")}>Co wymieniono</th>
+                                <th onDoubleClick={() =>handleSort("date_replaced")}>Data wymiany</th>
+                                <th onDoubleClick={() =>handleSort("part_brand")}>Marka części</th>
+                                <th onDoubleClick={() =>handleSort("cost")}>Cena</th>
+                                <th onDoubleClick={() =>handleSort("service")}>Gdzie servisowano</th>
+                                <th onDoubleClick={() =>handleSort("mechanic")}>Imię mechanika</th>
                                 <th>Gwarancja</th>
-                                <th>Koniec gwarancji</th>
+                                <th onDoubleClick={() =>handleSort("guarantee_time")}>Koniec gwarancji</th>
                                 <th>Przebieg przed naprawą</th>
                                 <th>Gwarancja wg przebiegu</th>
                                 <th>Dokument</th>
@@ -54,15 +58,8 @@ export const TallyListPage = () => {
                             </tr>
                             </thead>
                             <tbody>
-                            {/*{tallies.map((v) => {*/}
-                            {/*    return (<Tally*/}
-                            {/*        key={v.id}*/}
-                            {/*        tally={v}*/}
-                            {/*    />)*/}
-                            {/*})}*/}
-
                             {
-                                sortTallies(tallies, count, setCount).map(v => {
+                                sortTallies(tallies, count, sortByField).map(v => {
                                     return (<Tally
                                         key={v.id}
                                         tally={v}

@@ -109,20 +109,30 @@ export const getCurrentUser = () => {
 
 // sortowanie
 
-export const sortTallies = (tallies: TallyType[], count: number, setCount:Dispatch<SetStateAction<number>>) => {
-    console.log('count :', count);
-    let list = [...tallies].map(t => t);
-    if(count === 1) {
-        console.log('1')
-        list = [...list].sort((a, b) => a.replaced.localeCompare(b.replaced));
-    }
-    if (count === 2) {
-        console.log('2')
-        list = [...list].sort((a, b) => a.replaced.localeCompare(b.replaced)).reverse();
-    }
-    if (count === 3) {
-        console.log('3')
-        list = list.map(tally => tally);
-    }
+type Sortable = string | number;
+
+export const sortTallies = <K extends keyof TallyType>(
+    tallies: TallyType[],
+    count: 1 | 2 | 3,
+    field: K
+): TallyType[] => {
+
+    let list = [...tallies];
+
+    const sortBy = (a: TallyType, b: TallyType) => {
+        const valA = a[field] as Sortable;
+        const valB = b[field] as Sortable;
+
+        if (typeof valA === 'string' && typeof valB === 'string') {
+            return valA.localeCompare(valB);
+        }
+
+        return Number(valB) - Number(valA);
+    };
+
+    if (count === 1) list.sort(sortBy);
+    if (count === 2) list.sort(sortBy).reverse();
+    if (count === 3) return tallies;
+
     return list;
-}
+};
