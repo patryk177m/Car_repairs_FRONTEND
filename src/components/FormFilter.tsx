@@ -30,6 +30,13 @@ export const FormFilter = () => {
                 name="search"
                 value={search}
             />
+            {search.trim() === "" || (
+            <img
+                className="search__clear" src="/img/x.svg"
+                alt="search clear"
+                onClick={() => setSearch("")}
+            />
+            )}
         </form>
     )
 }

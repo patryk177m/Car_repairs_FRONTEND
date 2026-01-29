@@ -1,7 +1,22 @@
+form {
+  display: flex;
+  margin: 15px 0;
+  height: 25px;
+}
+
 .search {
   width: 100%;
     &__input {
-      width: 70%;
-      margin: 15px 0;
+      width: 177px;
     }
+
+  &__clear {
+    height: 20px;
+    padding: 0;
+    margin: auto 10px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
