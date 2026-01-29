@@ -15,7 +15,7 @@ type Props = {
 
 export const Tally: React.FC<Props> = ({tally}: Props) => {
     const navigate = useNavigate();
-    const {tallies, setTallies, valueCurrentMileage} = useTallyContext();
+    const {tallies, setTallies, valueCurrentMileage, setSearch} = useTallyContext();
 
     const dateValid = convertToDate(tally!.guarantee_time);
     const mileageValid = calcGuarantee(tally!.mileage_before_service, valueCurrentMileage, tally!.warranty_by_mileage);
@@ -38,7 +38,7 @@ export const Tally: React.FC<Props> = ({tally}: Props) => {
     return (
         <>
             <tr className="tally__tr">
-                <td>{tally?.replaced}</td>
+                <td onDoubleClick={() => {setSearch(tally.replaced)}}>{tally?.replaced}</td>
                 <td>{fullDate(tally?.date_replaced as Date)}</td>
                 <td>{tally?.part_brand}</td>
                 <td>{tally?.cost}</td>
