@@ -18,7 +18,7 @@ export const FormFilter = () => {
             setSearchParams({});
         }
 
-    }, [search, setSearchParams])
+    }, [search, searchParams])
 
     return (
         <form onSubmit={(e) => e.preventDefault()} className="">
