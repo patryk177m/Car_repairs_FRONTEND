@@ -23,7 +23,7 @@ export const FormFilter = () => {
     return (
         <form onSubmit={(e) => e.preventDefault()} className="">
             <input
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => setSearch(e.target.value.trimStart())}
                 className="search__input search"
                 type="text"
                 placeholder="Wyszukaj"
