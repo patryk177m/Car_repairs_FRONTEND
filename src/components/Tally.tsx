@@ -38,7 +38,12 @@ export const Tally: React.FC<Props> = ({tally}: Props) => {
     return (
         <>
             <tr className="tally__tr">
-                <td onDoubleClick={() => {setSearch(tally.replaced)}}>{tally?.replaced}</td>
+                <td
+                    className="td--search"
+                    onDoubleClick={() => {setSearch(tally.replaced)}}
+                >
+                    {tally?.replaced}
+                </td>
                 <td>{fullDate(tally?.date_replaced as Date)}</td>
                 <td>{tally?.part_brand}</td>
                 <td>{tally?.cost}</td>

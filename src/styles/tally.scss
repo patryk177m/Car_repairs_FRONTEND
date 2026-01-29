@@ -60,6 +60,13 @@ td {
   border-bottom: 2.3px dotted #000;
 }
 
+.td--search {
+  &:hover {
+    background-color: #ef7070;
+    cursor: pointer;
+  }
+}
+
 .colortext {
   font-weight: bold;
   &--red {
