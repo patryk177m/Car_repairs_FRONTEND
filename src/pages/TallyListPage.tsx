@@ -27,7 +27,7 @@ export const TallyListPage = () => {
     useEffect(() => {
         fetchTallies();
 
-    }, [search, localToken]);
+    }, [search, localToken, fetchTallies]);
 
     return (
         <>
