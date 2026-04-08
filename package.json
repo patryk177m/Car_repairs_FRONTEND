@@ -4,7 +4,7 @@
   "private": true,
   "main": "./lib/index.tsx",
   "types": "./lib/index.d.ts",
-  "homepage": "https://github.com/patryk177m/Car_repairs_FRONTEND",
+  "homepage": "http://github.com/patryk177m/Car_repairs_FRONTEND",
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.8.0",
