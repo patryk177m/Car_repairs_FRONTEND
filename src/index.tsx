@@ -20,7 +20,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
       <TallyProvider>
-          <BrowserRouter basename="https://patryk177m.github.io/Car_repairs_FRONTEND">
+          <BrowserRouter basename="/Car_repairs_FRONTEND">
               <Header/>
               <Routes>
                   <Route path="/" element={<App />} />
