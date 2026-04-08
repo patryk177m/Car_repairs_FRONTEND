@@ -34,6 +34,7 @@ export const TallyListPage = () => {
             {!localToken || (tallies.length <= 0 && !search) ? <h1 className="global--container title">Jeszcze nie posiadasz wpisów do wyświetlenia</h1> :
                 (
                     <>
+                        <h2 className="title__page global--container">Zestawienie serwisowe</h2>
                         <div className="global--container forms--container">
 
                             <FormFilter/>

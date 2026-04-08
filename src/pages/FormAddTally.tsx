@@ -39,6 +39,8 @@ export const FormAddTally = () => {
     }
 
     return (
+        <>
+        <h2 className="title__page global--container">Dodaj usługę</h2>
         <form className="form--container form global--container" onSubmit={onSubmit}>
             <button onClick={(e) => navigate("/list")} className="form__button" type="submit">Powrót</button>
 
@@ -75,10 +77,10 @@ export const FormAddTally = () => {
             <input className="form__input" onChange={e => handleChange(e, setAddTally)}
                    value={String(addTally?.guarantee_time)} type="date" id="guarantee_time" name="guarantee_time"/>
 
-            <label className="form__label" htmlFor="current_mileage"> Aktualny przebieg </label>
-            <input className="form__input" onChange={e => handleChange(e, setAddTally)}
-                   value={addTally?.current_mileage}
-                   type="text" id="current_mileage" name="current_mileage"/>
+            {/*<label className="form__label" htmlFor="current_mileage"> Aktualny przebieg </label>*/}
+            {/*<input className="form__input" onChange={e => handleChange(e, setAddTally)}*/}
+            {/*       value={addTally?.current_mileage}*/}
+            {/*       type="text" id="current_mileage" name="current_mileage"/>*/}
 
             <label className="form__label" htmlFor="mileage_before_service"> Przebieg przed naprawą </label>
             <input className="form__input" onChange={e => handleChange(e, setAddTally)}
@@ -107,5 +109,6 @@ export const FormAddTally = () => {
 
             <button className="form__button" type="submit">Zapisz</button>
         </form>
+        </>
     )
 }
