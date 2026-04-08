@@ -2,8 +2,6 @@
   "name": "car_repairs_frontend",
   "version": "0.1.0",
   "private": true,
-  "main": "./lib/index.tsx",
-  "types": "./lib/index.d.ts",
   "homepage": "https://patryk177m.github.io/Car_repairs_FRONTEND/",
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
