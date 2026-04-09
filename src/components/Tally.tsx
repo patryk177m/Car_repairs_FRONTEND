@@ -1,13 +1,14 @@
 import React from "react";
 import {TallyType} from "../types/tally";
-import "../styles/tally.scss"
+import "../styles/tally.scss";
+import "../styles/modalwindow.scss";
 import {Link, useNavigate} from "react-router";
 import {calcGuarantee, checkGuarantee, convertToDate, fullDate} from "../utils/date";
 import cn from "classnames";
-import {deleteTally} from "../utils/api";
 import {useTallyContext} from "../context/TallyContext";
 import {TallyComment} from "./TallyComment";
 import {FileDownload} from "./FileDownload";
+import {addClass} from "../utils/utils";
 
 type Props = {
     tally: TallyType;
@@ -15,20 +16,15 @@ type Props = {
 
 export const Tally: React.FC<Props> = ({tally}: Props) => {
     const navigate = useNavigate();
-    const {tallies, setTallies, valueCurrentMileage, setSearch} = useTallyContext();
-
+    const {valueCurrentMileage, setSearch, setSelectedId, setSelectedReplaced, isOpen, setIsOpen} = useTallyContext();
     const dateValid = convertToDate(tally!.guarantee_time);
     const mileageValid = calcGuarantee(tally!.mileage_before_service, valueCurrentMileage, tally!.warranty_by_mileage);
 
-    const deleteTallyById = (id: string) => {
-        if (!id) return;
-        const tallyList = tallies.filter(tally => tally.id !== id);
-        setTallies(tallyList);
-    }
-
-    const handleDelete = async (id: string) => {
-        if (!id) return;
-        await deleteTally(id).then(() => deleteTallyById(id));
+    const openModal = (id: string, replaced: string) => {
+        setIsOpen(true);
+        setSelectedId(tally.id);
+        setSelectedReplaced(tally.replaced);
+        addClass("modal-window", "show")
     }
 
     const handleRedirectOnEdit = () => {
@@ -73,7 +69,7 @@ export const Tally: React.FC<Props> = ({tally}: Props) => {
                         </Link>
                     </label>
                     <label className="custom-file-upload options--label option option--delete">
-                        <img onClick={(e) => handleDelete(tally.id)} className="options__icon" src="/img/delete.svg"
+                        <img onClick={() => openModal(tally.id, tally.replaced)} className="options__icon" src="/img/delete.svg"
                              alt="delete"/>
                     </label>
                 </td>

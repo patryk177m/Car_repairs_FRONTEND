@@ -8,6 +8,7 @@ import {FormFilter} from "../components/FormFilter";
 import {FormAddCurrentlyMileage} from "../components/FormAddCurrentlyMileage";
 import {sortTallies} from "../utils/utils";
 import {TallyType} from "../types/tally";
+import {ModalWindow} from "../components/ModalWindow";
 
 export const TallyListPage = () => {
     const {tallies, fetchTallies, search, localToken} = useTallyContext();
@@ -23,6 +24,8 @@ export const TallyListPage = () => {
 
         setSortByField(field);
     };
+
+
 
     useEffect(() => {
         fetchTallies();
@@ -73,6 +76,7 @@ export const TallyListPage = () => {
                 )
             }
             <ShowComment/>
+            <ModalWindow/>
         </>
     )
 }
