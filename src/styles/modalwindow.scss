@@ -1,0 +1,93 @@
+.modal {
+  position: relative;
+  padding: 30px 50px;
+  width: 650px;
+  background-color: var(--background-shadow);
+  box-shadow: 0 6px 6px rgba(255, 255, 255, 0.2);
+
+  &-window {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: none; // flex
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    pointer-events: none;
+    text-align: justify;
+}
+
+  & h1 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: var(--fontSizeImputsAndTextArea);
+    color: #e6943de4;
+    font-family: 'Sofadi One', system-ui;
+    font-weight: 700;
+    font-style: normal;
+}
+
+  & h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: var(--fontSizeImputsAndTextArea);
+    color: red;
+}
+
+  & p {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+  &-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+  &-btn {
+    background-color: var(--background-shadow);
+    color: var(--color);
+    font-size: var(--fontSizeImputsAndTextArea);
+    width: 300px;
+    height: 50px;
+    margin: 20px 0;
+    transition: var(--transition);
+    transition-timing-function: ease-in-out;
+
+    &:hover {
+      cursor: pointer;
+      border: solid 1px #e6943de4;
+  }
+}
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  color: red;
+  font-size: 3.5rem;
+}
+
+.show {
+  display: flex;
+  pointer-events: auto;
+}
+
+.close-x {
+  font-size: var(--fontSizeImputsAndTextArea);
+  font-weight: bold;
+  color: #000;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  &:hover {
+    cursor: pointer;
+    border: solid 1px #e6943de4;
+}
+}
