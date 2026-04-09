@@ -52,6 +52,12 @@ type TallyContextType = {
     setError: Dispatch<SetStateAction<string>>;
     valueCurrentMileage: number;
     setValueCurrentMileage: Dispatch<SetStateAction<number>>;
+    selectedReplaced: string;
+    setSelectedReplaced: (replaced: string) => void;
+    selectedId: string | undefined;
+    setSelectedId: (id: string) => void;
+    isOpen: boolean;
+    setIsOpen: (isOpen: boolean) => void;
 }
 
 const TallyContext = createContext<TallyContextType | undefined>(undefined);
@@ -66,7 +72,10 @@ export const TallyProvider = ({children}: { children: ReactNode }) => {
     const [search, setSearch] = useState("");
     const [localToken, setLocalToken] = useState<string | null>(null);
     const [error, setError] = useState<string>("");
-    const [valueCurrentMileage, setValueCurrentMileage] = useState<number>(0)
+    const [valueCurrentMileage, setValueCurrentMileage] = useState<number>(0);
+    const [selectedReplaced, setSelectedReplaced] = useState<string>("");
+    const [selectedId, setSelectedId] = useState<string | undefined>("");
+    const [isOpen, setIsOpen] = useState(false);
 
     const fetchTallies = async () => {
         return await getFilteredTallies(search)
@@ -160,6 +169,12 @@ export const TallyProvider = ({children}: { children: ReactNode }) => {
                 setError,
                 valueCurrentMileage,
                 setValueCurrentMileage,
+                selectedReplaced,
+                setSelectedReplaced,
+                selectedId,
+                setSelectedId,
+                isOpen,
+                setIsOpen,
 
             }
         }>
