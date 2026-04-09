@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {TallyType} from "../types/tally";
 import "../styles/tally.scss";
 import "../styles/modalwindow.scss";
@@ -9,7 +9,6 @@ import {useTallyContext} from "../context/TallyContext";
 import {TallyComment} from "./TallyComment";
 import {FileDownload} from "./FileDownload";
 import {addClass} from "../utils/utils";
-import {ModalWindow} from "./ModalWindow";
 
 type Props = {
     tally: TallyType;
